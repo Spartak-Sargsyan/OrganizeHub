@@ -16,4 +16,13 @@ interface FormData {
     password:string;
 }
 
-export type { IErrorMessage, FormData }
+interface Ivalidate {
+    value: number;
+    message: string;
+}
+interface Ivalidate2 {
+    value: boolean;
+    message: string;
+}
+
+export type { IErrorMessage, FormData, Ivalidate, Ivalidate2 }
