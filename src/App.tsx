@@ -1,13 +1,7 @@
-import Register from "./components/template/Register/Register"
-
+import Register from "./components/pages/Register";
 
 function App() {
-
-  return (
-      <Register/>
-    )
+  return <Register />;
 }
 
-export default App
-
-
+export default App;

@@ -6,7 +6,9 @@
     height: 100vh;
 }
 .wrapperRigster{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    /* display: grid; */
+    float: right;
+}
+.formContainer{
+    margin-top: 50px;
 }
