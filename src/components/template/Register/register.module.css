@@ -1,14 +1,23 @@
-.wrapper{
-    background-image: url('../../../assets/images/Register.jpg');
-    background-repeat: no-repeat;
-    background-position: 1% ;
-    background-size: cover;
-    height: 100vh;
+
+.wrapperForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
-.wrapperRigster{
-    /* display: grid; */
-    float: right;
+.formContainer {
+    /* background-color: white; */
+    /* border-radius: 15px; */
+    /* padding: 50px; */
 }
-.formContainer{
-    margin-top: 50px;
+form{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
+@media only screen and (max-width: 768px) {
+    .formContainer {
+        padding: 20px;
+    }
+}
+

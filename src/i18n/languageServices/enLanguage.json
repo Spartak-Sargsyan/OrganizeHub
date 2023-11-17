@@ -1,0 +1,9 @@
+{
+    "form.labels.firstName":"First Name",
+    "form.labels.lastName": "Last Name",
+    "form.labels.userName": "User Name",
+    "form.labels.phoneNumber": "Phone Number",
+    "form.labels.email": "Email",
+    "form.labels.password": "Password",
+    "form.labels.button":"Sign in"
+}

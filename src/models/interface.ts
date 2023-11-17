@@ -24,5 +24,9 @@ interface Ivalidate2 {
     value: boolean;
     message: string;
 }
+interface Ivalidat3 {
+    value: RegExp;
+    message: string;
+}
 
-export type { IErrorMessage, FormData, Ivalidate, Ivalidate2 }
+export type { IErrorMessage, FormData, Ivalidate, Ivalidate2, Ivalidat3 }

@@ -1,6 +1,19 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import en  from "./languageServices/enLanguage.json"
+import ru from "./languageServices/ruLanguage.json"
+
+
+const resources = {
+  en:{
+    translation:en
+  },
+  ru:{
+    translation:ru
+  }
+}
+
 
 i18n
   // detect user language
@@ -11,27 +24,12 @@ i18n
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
-    debug: true,
-    fallbackLng: 'en',
+    resources,
+    lng: 'en',
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
-    // resources: {
-    //   en: {
-    //     translation: {
-    //         greeting:{
-    //             hello:"Hello world"
-    //         }
-    //     }
-    //   },
-    //   ru: {
-    //     translation: {
-    //         greeting:{
-    //             hello:"Привет мир"
-    //         }
-    //     }
-    //   }
-    // }
+
   });
 
 export default i18n;

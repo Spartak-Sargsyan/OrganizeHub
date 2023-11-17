@@ -1,5 +1,6 @@
-import { Ivalidate, Ivalidate2 } from "../models/interface"
-import { MinMaxLength, RequiredField } from "./ErrorMessage"
+import { Ivalidat3, Ivalidate, Ivalidate2 } from "../models/interface"
+import { MinMaxLength, RequiredField, ValidateMessage } from "./ErrorMessage"
+import { RegExp } from "./RegEx"
 
 
 const Required:Ivalidate2 = {
@@ -17,5 +18,15 @@ const MaxLength:Ivalidate = {
     message: MinMaxLength.MaxLengthMessage || "Error",
 }
 
+const RegExpPattern:Ivalidat3 = {
+    value:RegExp.EmailRegExp,
+    message: ValidateMessage.EmailErrorMessage || "Error"
+}
 
-export { Required, MaxLength, MinLength }
+const RegExpPattern2:Ivalidat3 = {
+    value:RegExp.PasswordRegExp,
+    message: ValidateMessage.PasswordErrorMessage || "Error"
+}
+
+
+export { Required, MaxLength, MinLength, RegExpPattern, RegExpPattern2 }

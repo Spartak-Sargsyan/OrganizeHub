@@ -1,8 +1,7 @@
 import style from "../template/Register/register.module.css";
 import ColorMode from "../moleculs/ColorMode/ColorMode";
-import RegisterForm from "../template/Register/RegisterForm";
 import FormContoler from "../organizm/FormContoler";
-
+// import img from "../../assets/images/register.jpg";
 interface IRegisterProps {
   siteName: string;
   description: string;
@@ -12,12 +11,15 @@ interface IRegisterProps {
 const Register = ({ logoName, siteName, description }: IRegisterProps) => {
   return (
     <div className={style.wrapper}>
-      <ColorMode />
+        <ColorMode />
       <div className={style.wrapperRigster}>
-        <div className={style.formContainer}>
-          <RegisterForm>
+        <div className={style.wrapperForm}>
+          {/* <div className={style.img}>
+            <img src={img} alt="" />
+          </div> */}
+          <div className={style.formContainer}>
             <FormContoler />
-          </RegisterForm>
+          </div>
         </div>
         <div className={style.imageContainer}>
           <div className={style.description}>
