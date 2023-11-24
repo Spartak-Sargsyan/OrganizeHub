@@ -1,0 +1,31 @@
+{
+    "FORM":{
+        "LABELS":{
+            "FIRSTNAME":"Имя",
+            "LASTNAME": "Фамилия",
+            "USERNAME": "Имя пользователя",
+            "PHONENUMBER": "Номер телефона",
+            "EMAIL": "Адрес электронный адресс",
+            "PASSWORD":{
+                "PASSWORD":"Пароль",
+                "REPEATPASSWORD":"Повторите пороль"
+            },
+            "BUTTON":{
+                "SIGNUP":"Зарегистрироваться",
+                "SIGNIN":"Войти"
+            }
+        }
+    },
+    "ERROR":{
+        "MESSAGE":{
+            "REQUAREDMESSAGE": "Это поля объязательно.",
+            "PHONEMESSAGE": "Пожалуйста, введите правильный номер телефона.",
+            "EMAILMESSAGE": "Это недействительный адрес электронной почты.",
+            "PASSWORDMESSAGE": "Не правильный формат пароля.",
+            "REPEATPASSWORD": "Пожалуйста повторите правильно.",
+            "MINLENGTHMESSAGE": "Минимум 2 букв.",
+            "MAXLENGTHMESSAGE": "Максимум 50 букв."
+        }
+    }
+}
+

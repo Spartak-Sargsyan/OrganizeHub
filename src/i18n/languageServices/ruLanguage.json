@@ -1,9 +1,0 @@
-{
-    "form.labels.firstName":"Имя",
-    "form.labels.lastName": "Фамилия",
-    "form.labels.userName": "Имя пользователя",
-    "form.labels.phoneNumber": "Номер телефона",
-    "form.labels.email": "Адрес электронный адресс",
-    "form.labels.password": "Пароль",
-    "form.labels.button":"Зарегистрироваться"
-}

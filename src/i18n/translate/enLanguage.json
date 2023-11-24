@@ -1,0 +1,30 @@
+{
+    "FORM":{
+        "LABELS":{
+            "FIRSTNAME":"First Name",
+            "LASTNAME": "Last Name",
+            "USERNAME": "User Name",
+            "PHONENUMBER": "Phone Number",
+            "EMAIL": "Email",
+            "PASSWORD":{
+                "PASSWORD":"Password",
+                "REPEATPASSWORD":"Repeat password"
+            },
+            "BUTTON":{
+                "SIGNUP":"Sign up",
+                "SIGNIN":"Sign in"
+            }
+        }
+    },
+    "ERROR":{
+        "MESSAGE":{
+            "REQUAREDMESSAGE": "This field id required to fill in.",
+            "EMAILMESSAGE": "This is invalid email",
+            "PASSWORDMESSAGE": "This is invalid password",
+            "PHONEMESSAGE": "Please enter correct phone number",
+            "MINLENGTHMESSAGE": "Minimum 2 characters",
+            "MAXLENGTHMESSAGE": "Maximum 50 characters"
+        }
+    }
+}
+

@@ -9,4 +9,4 @@ const ErrorMessage: React.FC<ChildrenProps> = ({ children }) => {
   return <span className={style.error}>{children}</span>;
 };
 
-export default ErrorMessage;
+export { ErrorMessage };

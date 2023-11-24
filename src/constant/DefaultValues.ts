@@ -1,4 +1,6 @@
-const DefaultValuesRegister = {
+import { IDefaultValues } from "../models/interface"
+
+const DefaultValuesRegister:IDefaultValues = {
     firstName: "",
     lastName: "",
     userName: "",
@@ -7,4 +9,9 @@ const DefaultValuesRegister = {
     password: "",
 };
 
-export { DefaultValuesRegister }
+const DefaultValuesLogin:IDefaultValues = {
+    email: "",
+    password: "",
+}
+
+export { DefaultValuesRegister, DefaultValuesLogin }
