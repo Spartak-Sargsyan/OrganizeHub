@@ -1,17 +1,15 @@
 import style from "./register.module.css";
-import ColorMode from "../../moleculs/ColorMode/ColorMode";
 import FormContoler from "../../organizm/regisrerOrganizm/FormControler";
 // import img from "../../assets/images/register.jpg";
 interface IRegisterProps {
-  siteName: string;
-  description: string;
-  logoName: string;
+  siteName?: string;
+  description?: string;
+  logoName?: string;
 }
 
 const Register = ({ logoName, siteName, description }: IRegisterProps) => {
   return (
     <div className={style.wrapper}>
-      <ColorMode />
       <div className={style.wrapperRigster}>
         <div className={style.wrapperForm}>
           <div className={style.formContainer}>

@@ -5,7 +5,6 @@ import {
   CostomInput,
   ErrorMessage,
   useTranslation,
-  SelectLanguage,
   DefaultValuesLogin,
   RegExp,
 } from "./index";
@@ -23,20 +22,17 @@ const FormControler = () => {
 
   const isButtonDisable = !isDirty || isValid;
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
-  const handleLanguageSwitch = (language: string) => {
-    i18n.changeLanguage(language);
-  };
 
   return (
     <>
-      <SelectLanguage onChange={handleLanguageSwitch} text1="en" text2="ru" />
+      {/* <SelectLanguage onChange={handleLanguageSwitch} text1="en" text2="ru" /> */}
       <form onSubmit={handleSubmit(handleLoginSubmit)}>
         <CostomInput
-          label={t("FORM.LABEL.EMAIL")}
+          label={t("FORM.LABELS.EMAIL")}
           type="email"
-          placeholder={t("FORM.LABEL.EMAIL")}
+          placeholder={t("FORM.LABELS.EMAIL")}
           style={errors.email && { borderColor: "red" }}
           {...register("email", {
             required: t("ERROR.MESSAGE.REQUAREDMESSAGE"),

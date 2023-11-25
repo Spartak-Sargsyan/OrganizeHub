@@ -1,4 +1,3 @@
-import React from "react";
 import FormControler from "../../organizm/loginOrganizm/FormControler";
 
 const Login = () => {

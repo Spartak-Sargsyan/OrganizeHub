@@ -1,3 +1,4 @@
+@import url(../assets/fonts/Comic/stylesheet.css);
 html,
 body,
 div,
@@ -101,6 +102,7 @@ section {
 
 body {
     line-height: 1;
+    font-family: 'Comic Neue' !important; 
 }
 
 ol,

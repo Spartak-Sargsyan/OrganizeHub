@@ -5,7 +5,6 @@ import {
   CostomInput,
   ErrorMessage,
   useTranslation,
-  SelectLanguage,
   DefaultValuesRegister,
   RegExp,
   FormData,
@@ -38,11 +37,7 @@ const FormControler: React.FC = () => {
   // };
 
   const isButtonDisable = isDirty || isValid;
-  const { t, i18n } = useTranslation();
-
-  const handleLanguageSwitch = (language: string) => {
-    i18n.changeLanguage(language);
-  };
+  const { t } = useTranslation();
 
   // const onSubmit: SubmitHandler<FormData> = async (data) => {
   //   data;
@@ -66,7 +61,7 @@ const FormControler: React.FC = () => {
 
   return (
     <>
-      <SelectLanguage onChange={handleLanguageSwitch} text1="en" text2="ru" />
+      {/* <SelectLanguage onChange={handleLanguageSwitch} text1="en" text2="ru" /> */}
 
       <form
         className={style.form}
@@ -95,7 +90,7 @@ const FormControler: React.FC = () => {
         )}
 
         <CostomInput
-          label={t("FOMR.LABELS.LASTNAME")}
+          label={t("FORM.LABELS.LASTNAME")}
           placeholder={t("FORM.LABELS.LASTNAME")}
           {...register("firstName", {
             required: t("ERROR.MESSAGE.REQUAREDMESSAGE"),
