@@ -4,15 +4,13 @@
             "FIRSTNAME":"First Name",
             "LASTNAME": "Last Name",
             "USERNAME": "User Name",
-            "PHONENUMBER": "Phone Number",
             "EMAIL": "Email",
-            "PASSWORD":{
-                "PASSWORD":"Password",
-                "REPEATPASSWORD":"Repeat password"
-            },
+            "PASSWORD":"Password",
             "BUTTON":{
                 "SIGNUP":"Sign up",
-                "SIGNIN":"Sign in"
+                "SIGNUP2":"Register - it's free!",
+                "SIGNIN":"Sign in",
+                "TASKS": "Create a task" 
             }
         }
     },
@@ -21,10 +19,39 @@
             "REQUAREDMESSAGE": "This field id required to fill in.",
             "EMAILMESSAGE": "This is invalid email",
             "PASSWORDMESSAGE": "This is invalid password",
-            "PHONEMESSAGE": "Please enter correct phone number",
-            "MINLENGTHMESSAGE": "Minimum 2 characters",
-            "MAXLENGTHMESSAGE": "Maximum 50 characters"
+            "MINLENGTHMESSAGE": "Minimum 3 characters",
+            "MAXLENGTHMESSAGE": "Maximum 30 characters"
         }
+    },
+    "PP":{
+        "HEADING":"Privacy Policy",
+        "PP_APP": "Privacy Policy for ",
+        "PP_APP_2":"Application",
+        "UPDATE": "Last Update",
+        "ABOUT":{
+            "ONE":"website. This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data. We use your data to provide and improve the Service. By using the Service, you agree to the collection and use of information in accordance with this policy.",
+            "TWO":"OrganizeHub operates the ",
+            "URL":"https://www.organizehub.com"
+        },
+        "ABOUT_2":{
+            "ONE":"Information Collection and Use",
+            "TWO":"We collect several different types of information for various purposes to provide and improve our Service to you."
+        },
+        "ABOUT_3":{
+            "ONE":"Types of Data Collected",
+            "TWO":"Personal Data: While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you . Personally identifiable information may include, but is not limited to:"
+        },
+        "LIST":{
+            "ONE":"Email address",
+            "TWO":"First name and last name",
+            "THREE":"File Cookies"
+        }
+    },
+    "WELCOM":{
+        "DESCRIPTION":"OrganizeHub helps to collect all employees, tasks and tools in one place",
+        "TEXT":"Bring everything together in one place, even if your team members are scattered around the world.",
+        "DESCRIPTION2":"Source of Productivity Improvement",
+        "TEXT2":"Simple, with flexible settings and wide capabilities. Boards, columns, and cards provide a comprehensive view of who is doing what and what needs to be accomplished."
     }
 }
 

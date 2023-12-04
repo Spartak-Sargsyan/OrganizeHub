@@ -5,8 +5,11 @@ import Login from "./components/template/Register/Login";
 import Register from "./components/template/Register/Register";
 import NotFoundPage from "./components/pages/ErrorPages/NotFoundPage";
 import PrivacyPolicy from "./components/pages/PrivacyPolicy/PrivacyPolicy";
+import WelcomePage from "./components/pages/Welcome/Welcome";
+import Task from "./components/template/Register/UserTask/Task";
 
 // const FileUpload = () => {
+
 //   const [img, setImg] = useState<string | undefined>();
 
 //   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,9 +27,9 @@ import PrivacyPolicy from "./components/pages/PrivacyPolicy/PrivacyPolicy";
 //     </>
 //   );
 // };
-const LoadingPage: React.FC = () => {
-  return <h1>Hello world</h1>;
-};
+// const LoadingPage: React.FC = () => {
+//   return <h1>Hello world</h1>;
+// };
 
 function App() {
   return (
@@ -34,14 +37,14 @@ function App() {
     <>
       <Routes>
         <Route path={"/"} element={<Layout />}>
-          <Route path={"/"} element={<LoadingPage />} />
-          <Route path={"/login"} element={<Login />} />
+          <Route path={"/"} element={<WelcomePage />} />
+          <Route path={"/login"} element={<Login siteName="OrganizeHub" />} />
           <Route path={"/register"} element={<Register />} />
           <Route path={"/privacypolicy"} element={<PrivacyPolicy />} />
-          <Route path={"*"} element={<NotFoundPage />} />
         </Route>
+        <Route path={"/taskPage"} element={<Task/>} />
+        <Route path={"*"} element={<NotFoundPage />} />
       </Routes>
-      {/* <NotFoundPage/> */}
     </>
   );
 }

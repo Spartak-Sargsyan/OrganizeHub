@@ -9,10 +9,11 @@ import {
   ListIcon,
 } from "@chakra-ui/react";
 import { InfoIcon } from "@chakra-ui/icons";
+import { useTranslation } from "react-i18next";
 
 const PrivacyPolicy = () => {
   const date = new Date().toDateString();
-
+  const { t } = useTranslation();
   return (
     <Container
       style={{ minHeight: "calc(100vh - 94px - 72px)" }}
@@ -20,22 +21,22 @@ const PrivacyPolicy = () => {
       mt={10}
     >
       <Flex justifyContent={"center"} direction={"column"} align="center">
-        <Heading color={"blue.600"} as={"h1"} size={"3xl"} mb={6}>
-          Privacy Policy
+        <Heading color={"blue.600"} as={"h1"} size={"xl"} mb={6}>
+          {t("PP.HEADING")}
         </Heading>
         <Box maxWidth="600px" textAlign="center" p={4}>
           <Text fontSize="xl" mb={4}>
-            Privacy Policy for{" "}
+            {t("PP.PP_APP")}
             <Text as="span" color="teal.400">
               OrganizeHub
             </Text>{" "}
-            Application
+            {t("PP.PP_APP_2")}
           </Text>
           <Text fontSize="xl" color="gray.5 00">
-            Last Update: {date}
+            {t("PP.UPDATE")}: {date}
           </Text>
           <Text mt={4} fontSize="xl">
-            OrganizeHub operates the{" "}
+            {t("PP.ABOUT.TWO")}
             <Text
               as="a"
               color="teal.400"
@@ -43,40 +44,31 @@ const PrivacyPolicy = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              https://www.organizehub.com
+              {t("PP.ABOUT.URL")}
             </Text>{" "}
-            website. This page informs you of our policies regarding the
-            collection, use, and disclosure of personal data when you use our
-            Service and the choices you have associated with that data. We use
-            your data to provide and improve the Service. By using the Service,
-            you agree to the collection and use of information in accordance
-            with this policy.
+            {t("PP.ABOUT.ONE")}
           </Text>
           <Text mt={4} fontSize="xl">
-            <strong>Information Collection and Use</strong>
+            {t("PP.ABOUT_2.ONE")}
             <br />
-            We collect several different types of information for various
-            purposes to provide and improve our Service to you.
+            {t("PP.ABOUT_2.TWO")}
           </Text>
           <Text mt={4} fontSize="xl">
-            <strong>Types of Data Collected</strong>
+            {t("PP.ABOUT_3.ONE")}
             <br />
-            <strong>Personal Data:</strong> While using our Service, we may ask
-            you to provide us with certain personally identifiable information
-            that can be used to contact or identify you . Personally
-            identifiable information may include, but is not limited to:
+            {t("PP.ABOUT_3.TWO")}
             <List>
               <ListItem>
                 <ListIcon as={InfoIcon} color="blue.500" />
-                Email address
+                {t("PP.LIST.ONE")}
               </ListItem>
               <ListItem>
                 <ListIcon as={InfoIcon} color="blue.500" />
-                First name and last name
+                {t("PP.LIST.TWO")}
               </ListItem>
               <ListItem>
                 <ListIcon as={InfoIcon} color="blue.500" />
-                File Cookies
+                {t("PP.LIST.THREE")}
               </ListItem>
             </List>
           </Text>

@@ -1,11 +1,11 @@
 .btn {
-    text-decoration: none;
-    font-size:25px;
-    padding:10px;
-    border-radius:10px;
-    margin: 0 15px 0;
+  text-decoration: none;
+  font-size: 25px;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 0 15px 0;
 }
 
-.btn:hover{
-    background: linear-gradient(45deg, #90CDF4, #2B6CB0);
+.btn:hover {
+  background: linear-gradient(45deg, #90cdf4, #2b6cb0);
 }

@@ -1,12 +1,16 @@
-import { useForm } from "react-hook-form";
 import {
-  FormData,
   Button,
   CostomInput,
   ErrorMessage,
   useTranslation,
-  DefaultValuesLogin,
   RegExp,
+  useState,
+  loginData,
+  useNavigate,
+  isAxiosError,
+  SubmitHandler,
+  useForm,
+  ILoginData,
 } from "./index";
 
 const FormControler = () => {
@@ -14,16 +18,48 @@ const FormControler = () => {
     register,
     formState: { errors, isDirty, isValid },
     handleSubmit,
-  } = useForm<FormData>({
+  } = useForm<ILoginData>({
     mode: "all",
-    defaultValues: DefaultValuesLogin,
   });
-  const handleLoginSubmit = (data: FormData) => console.log(data);
 
+  const [loginUser, setLoginUser] = useState<ILoginData>({
+    email: "",
+    password: "",
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setLoginUser({ ...loginUser, [name]: value });
+  };
+
+  const navigate = useNavigate();
+  const handleLoginSubmit: SubmitHandler<ILoginData> = async () => {
+    try {
+      const response = await loginData(loginUser);
+      console.log(response.data.accessToken);
+      console.log("Login successful2:", response);
+      const token = response.data.accessToken;
+      localStorage.setItem("token", token);
+      if (response) {
+        navigate("/taskPage");
+      }
+      return response;
+    } catch (error: unknown) {
+      if (isAxiosError(error)) {
+        if (error.response) {
+          console.error(
+            "Registration failed - User already exists:",
+            error.response.data
+          );
+        } else {
+          console.error("Registration failed:", error);
+        }
+      }
+    }
+  };
   const isButtonDisable = !isDirty || isValid;
 
   const { t } = useTranslation();
-
 
   return (
     <>
@@ -38,9 +74,11 @@ const FormControler = () => {
             required: t("ERROR.MESSAGE.REQUAREDMESSAGE"),
             pattern: {
               value: RegExp.EmailRegExp,
-              message: t("EROROR.MESSAGE.EMAILMESSAGE"),
+              message: t("ERROR.MESSAGE.EMAILMESSAGE"),
             },
           })}
+          value={loginUser.email}
+          handleChange={handleInputChange}
         />
         {errors?.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
         <CostomInput
@@ -55,11 +93,18 @@ const FormControler = () => {
           })}
           style={errors.password && { borderColor: "red" }}
           type="password"
+          value={loginUser.password}
+          handleChange={handleInputChange}
         />
         {errors?.password && (
           <ErrorMessage>{errors.password.message}</ErrorMessage>
         )}
-        <Button type="submit" colorScheme="blue" disabled={isButtonDisable}>
+        <Button
+          mt={5}
+          type="submit"
+          colorScheme="blue"
+          disabled={isButtonDisable}
+        >
           {t("FORM.LABELS.BUTTON.SIGNIN")}
         </Button>
       </form>

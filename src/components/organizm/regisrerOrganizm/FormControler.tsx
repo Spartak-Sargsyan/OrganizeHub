@@ -1,68 +1,60 @@
 import style from "../../template/Register/register.module.css";
-import { /* SubmitHandler*/ useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import {
   Button,
   CostomInput,
   ErrorMessage,
   useTranslation,
-  DefaultValuesRegister,
   RegExp,
-  FormData,
+  IRegiterData,
 } from "./index";
-// import { registerUser } from "../../../services/CRUDFunctions";
-// import { useState } from "react";
+import { registerUser } from "../../../services/CRUDFunctions";
+import { useState } from "react";
+import { isAxiosError } from "axios";
 
 const FormControler: React.FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
-  } = useForm<FormData>({
+  } = useForm<IRegiterData>({
     mode: "all",
-    defaultValues: DefaultValuesRegister,
   });
 
-  // const [registerForm, setRegisterForm] = useState({
-  //   firstName: "",
-  //   lastName: "",
-  //   userName: "",
-  //   phoneNumber: "",
-  //   email: "",
-  //   password: "",
-  // });
+  const [registerForm, setRegisterForm] = useState<IRegiterData>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
 
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setRegisterForm({ ...registerForm, [name]: value });
-  // };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setRegisterForm({ ...registerForm, [name]: value });
+  };
 
   const isButtonDisable = isDirty || isValid;
   const { t } = useTranslation();
 
-  // const onSubmit: SubmitHandler<FormData> = async (data) => {
-  //   data;
-  //   try {
-  //     const response = await registerUser(data);
-  //     reset();
-  //     return response;
-  //     console.log("Registration successful:", response);
-  //   } catch (error) {
-  //     console.error("Registration failed:", error);
-  //   }
-  // };
-
-  // const password = watch("password");
-  // const repeatPassword = watch("repeatPassword");
-  // console.log(password, repeatPassword);
-
-  const handleRegisterSubmit = (data: FormData) => {
-    console.log(data);
+  const handleRegisterSubmit: SubmitHandler<IRegiterData> = async () => {
+    try {
+      const response = await registerUser(registerForm);
+      console.log("Registration successful:", response);
+      return response;
+    } catch (error: unknown) {
+      if (isAxiosError(error)) {
+        if (error.response) {
+          console.error(
+            "Registration failed - User already exists:",
+            error.response.data
+          );
+        }
+      }
+    }
   };
 
   return (
     <>
-      {/* <SelectLanguage onChange={handleLanguageSwitch} text1="en" text2="ru" /> */}
-
       <form
         className={style.form}
         onSubmit={handleSubmit(handleRegisterSubmit)}
@@ -75,14 +67,16 @@ const FormControler: React.FC = () => {
           {...register("firstName", {
             required: t("ERROR.MESSAGE.REQUAREDMESSAGE"),
             minLength: {
-              value: 2,
+              value: 3,
               message: t("ERROR.MESSAGE.MINLENGTHMESSAGE"),
             },
             maxLength: {
-              value: 50,
+              value: 30,
               message: t("ERROR.MESSAGE.MAXLENGTHMESSAGE"),
             },
           })}
+          value={registerForm.firstName}
+          handleChange={handleInputChange}
         />
 
         {errors?.firstName && (
@@ -92,10 +86,10 @@ const FormControler: React.FC = () => {
         <CostomInput
           label={t("FORM.LABELS.LASTNAME")}
           placeholder={t("FORM.LABELS.LASTNAME")}
-          {...register("firstName", {
+          {...register("lastName", {
             required: t("ERROR.MESSAGE.REQUAREDMESSAGE"),
             minLength: {
-              value: 2,
+              value: 3,
               message: t("ERROR.MESSAGE.MINLENGTHMESSAGE"),
             },
             maxLength: {
@@ -105,48 +99,11 @@ const FormControler: React.FC = () => {
           })}
           style={errors.lastName && { borderColor: "red" }}
           type="text"
+          value={registerForm.lastName}
+          handleChange={handleInputChange}
         />
         {errors?.lastName && (
           <ErrorMessage>{errors.lastName.message}</ErrorMessage>
-        )}
-
-        <CostomInput
-          label={t("FORM.LABELS.USERNAME")}
-          placeholder={t("FORM.LABELS.USERNAME")}
-          {...register("firstName", {
-            required: t("ERROR.MESSAGE.REQUAREDMESSAGE"),
-            minLength: {
-              value: 2,
-              message: t("ERROR.MESSAGE.MINLENGTHMESSAGE"),
-            },
-            maxLength: {
-              value: 50,
-              message: t("ERROR.MESSAGE.MAXLENGTHMESSAGE"),
-            },
-          })}
-          style={errors.userName && { borderColor: "red" }}
-          type="text"
-        />
-        {errors?.userName && (
-          <ErrorMessage>{errors.userName.message}</ErrorMessage>
-        )}
-
-        <CostomInput
-          label={t("FORM.LABELS.PHONENUMBER")}
-          placeholder={t("FORM.LABELS.PHONENUMBER")}
-          {...register("phoneNumber", {
-            required: t("ERROR.MESSAGE.REQUAREDMESSAGE") || "Error",
-            pattern: {
-              value: RegExp.PhoneNumberRegExp,
-              message: t("ERROR.MESSAGE.PHONEMESSAGE"),
-            },
-          })}
-          style={errors.phoneNumber && { borderColor: "red" }}
-          type="text"
-        />
-
-        {errors?.phoneNumber && (
-          <ErrorMessage>{errors.phoneNumber.message}</ErrorMessage>
         )}
 
         <CostomInput
@@ -161,6 +118,8 @@ const FormControler: React.FC = () => {
           })}
           style={errors.email && { borderColor: "red" }}
           type="email"
+          value={registerForm.email}
+          handleChange={handleInputChange}
         />
 
         {errors?.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
@@ -170,8 +129,8 @@ const FormControler: React.FC = () => {
         )}
 
         <CostomInput
-          label={t("FORM.LABELS.PASSWORD.PASSWORD")}
-          placeholder={t("FORM.LABELS.PASSWORD.PASSWORD")}
+          label={t("FORM.LABELS.PASSWORD")}
+          placeholder={t("FORM.LABELS.PASSWORD")}
           {...register("password", {
             required: t("ERROR.MESSAGE.REQUAREDMESSAGE"),
             pattern: {
@@ -181,32 +140,16 @@ const FormControler: React.FC = () => {
           })}
           style={errors.password && { borderColor: "red" }}
           type="password"
+          value={registerForm.password}
+          handleChange={handleInputChange}
         />
 
         {errors?.password && (
           <ErrorMessage>{errors.password.message}</ErrorMessage>
         )}
 
-        <CostomInput
-          label={t("FORM.LABELS.PASSWORD.REPEATPASSWORD")}
-          placeholder={t("FORM.LABELS.PASSWORD.REPEATPASSWORD")}
-          {...register("repeatPassword", {
-            required: t("ERROR.MESSAGE.REQUAREDMESSAGE") || "Error",
-            pattern: {
-              value: RegExp.PasswordRegExp,
-              message: t("ERROR.MESSAGE.REPEATPASSWORD"),
-            },
-          })}
-          style={errors.password && { borderColor: "red" }}
-          type="password"
-        />
-
-        {errors?.repeatPassword && (
-          <ErrorMessage>{errors.repeatPassword.message}</ErrorMessage>
-        )}
-
         <Button type="submit" colorScheme="blue" disabled={isButtonDisable}>
-          {t("form.labels.button.signUp")}
+          {t("FORM.LABELS.BUTTON.SIGNUP")}
         </Button>
       </form>
     </>

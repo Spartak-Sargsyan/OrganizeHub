@@ -3,16 +3,7 @@ import { IErrorMessage } from "../models/interface"
 type ErrorMessage = Partial<IErrorMessage>
 
 type RegEx = {
-    PhoneNumberRegExp:RegExp;
-    EmailRegExp:RegExp;
-    PasswordRegExp:RegExp;
+    [key:string]:RegExp;
 }
 
-
-type CSS = {
-    [key:string]:string
-} 
-
-
-
-export type { ErrorMessage, CSS, RegEx }
+export type { ErrorMessage, RegEx }

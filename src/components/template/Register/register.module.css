@@ -4,12 +4,9 @@
     justify-content: center;
     align-items: center;
     height: 100%;
+
 }
-.formContainer {
-    /* background-color: white; */
-    /* border-radius: 15px; */
-    /* padding: 50px; */
-}
+
 form{
     display: flex;
     flex-direction: column;

@@ -7,13 +7,30 @@ interface IErrorMessage {
     PhoneErrorMessage:string;
 }
 
-interface IDefaultValues {
-    [key:string]: string
+interface ILoginData {
+    email:string;
+    password:string;
 }
 
-interface FormData {
-    [key:string]:string
+interface IRegiterData{
+    firstName: string;
+    lastName:string;
+    email:string;
+    password: string;
+}
+
+interface ITask {
+    id:number;
+    title:string;
+    description:string;
+    dueDate:string;
+}
+
+interface IAddTasks {
+    title:string;
+    description: string;
+    dueDate:string;
 }
 
 
-export type { IErrorMessage, FormData,IDefaultValues }
+export type { IErrorMessage, ILoginData, IRegiterData, IAddTasks, ITask }

@@ -1,27 +1,24 @@
-import { Box, Text, Button } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import notpage from "../../../assets/images/404.jpg";
 
 const NotFoundPage = () => {
   return (
+    // <Box>
     <Box
-      style={{ minHeight: "calc(91vh - 92px - 60px)" }}
       textAlign="center"
-      mt={8}
+      backgroundImage={notpage}
+      backgroundSize={"100vw"}
+      backgroundRepeat={"no-repeat"}
+      height={"100vh"}
     >
-      <Text fontSize="4xl" fontWeight="bold">
-        404 - Not Found
-      </Text>
-      <Text fontSize="xl" mt={4}>
-        Oops! The page you're looking for doesn't exist.
-      </Text>
-      <Box mt={8}>
-        <Link to="/">
-          <Button colorScheme="teal" size="lg">
-            Go Home
-          </Button>
-        </Link>
-      </Box>
+      <Link to="/">
+        <Button colorScheme="teal" size="lg">
+          Go Home
+        </Button>
+      </Link>
     </Box>
+    // </Box>
   );
 };
 

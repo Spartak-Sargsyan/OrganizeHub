@@ -1,15 +1,16 @@
-import { Box, Flex, Heading, Link, Image } from "./index";
-import logo from "../../../assets/images/logo.jpg";
+import { Box, Flex, Heading, Link, Image, useTranslation } from "./index";
+import logo from "../../../assets/images/logo.png";
 import style from "./header.module.css";
 
 const Header = () => {
+  const { t } = useTranslation();
+
   return (
     <Box boxShadow={"xl"} p={3}>
       <Flex justify={"space-between"} align={"center"}>
         <Link to={"/"}>
           <Image
-            // style={{ margin: 15 }}
-            m={2}
+            m={1}
             src={logo}
             alt={"OrganizeHub"}
             borderRadius={15}
@@ -20,10 +21,10 @@ const Header = () => {
         <Heading as={"h1"}>OrganizeHub</Heading>
         <nav>
           <Link className={style.btn} to={"/login"}>
-            Sign in
+            {t("FORM.LABELS.BUTTON.SIGNIN")}
           </Link>
           <Link className={style.btn} to={"/register"}>
-            Sign up
+            {t("FORM.LABELS.BUTTON.SIGNUP")}
           </Link>
         </nav>
       </Flex>
