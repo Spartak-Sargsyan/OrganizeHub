@@ -1,11 +1,11 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import { ReactNode, createContext, useState } from "react";
 import { ILoginData } from "../models/interface";
 import { loginApi } from "../services/ApiRequest";
 import axios, { isAxiosError } from "axios";
 
 interface IContextProps {
   isLoggedIn: boolean;
-  loginUserFetch: (loginData: ILoginData) => Promise<any>;
+  loginUserFetch: (loginData: ILoginData) => Promise<unknown>;
   userLogOut: () => void;
 }
 
@@ -49,11 +49,4 @@ export const ChekUserProvider: React.FC<IAuthProviderProps> = ({
   };
 
   return <ChekUser.Provider value={contextValue}>{children}</ChekUser.Provider>;
-};
-
-export const useChekUser = () => {
-  const context = useContext(ChekUser);
-  if (!context)
-    throw new Error("useChekUser must be used within a ChekUserProvider");
-  return context;
 };

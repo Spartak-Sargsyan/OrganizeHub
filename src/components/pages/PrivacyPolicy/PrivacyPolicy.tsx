@@ -57,21 +57,21 @@ const PrivacyPolicy = () => {
             {t("PP.ABOUT_3.ONE")}
             <br />
             {t("PP.ABOUT_3.TWO")}
-            <List>
-              <ListItem>
-                <ListIcon as={InfoIcon} color="blue.500" />
-                {t("PP.LIST.ONE")}
-              </ListItem>
-              <ListItem>
-                <ListIcon as={InfoIcon} color="blue.500" />
-                {t("PP.LIST.TWO")}
-              </ListItem>
-              <ListItem>
-                <ListIcon as={InfoIcon} color="blue.500" />
-                {t("PP.LIST.THREE")}
-              </ListItem>
-            </List>
           </Text>
+          <List>
+            <ListItem>
+              <ListIcon as={InfoIcon} color="blue.500" />
+              {t("PP.LIST.ONE")}
+            </ListItem>
+            <ListItem>
+              <ListIcon as={InfoIcon} color="blue.500" />
+              {t("PP.LIST.TWO")}
+            </ListItem>
+            <ListItem>
+              <ListIcon as={InfoIcon} color="blue.500" />
+              {t("PP.LIST.THREE")}
+            </ListItem>
+          </List>
         </Box>
       </Flex>
     </Container>

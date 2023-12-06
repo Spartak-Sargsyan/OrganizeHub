@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import ProfilePage from "../components/organizm/Profile Page/ProfilePage";
+import ProfilePage from "../components/organizm/ProfilePage/ProfilePage";
 import { AuthenticatedRoutePath } from "../constant/routes";
 import Task from "../components/template/Register/UserTask/Task";
 import Layout from "../components/organizm/Layout/Layout";

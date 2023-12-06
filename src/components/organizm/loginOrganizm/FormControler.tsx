@@ -5,13 +5,12 @@ import {
   useTranslation,
   RegExp,
   useState,
-  // loginData,
   isAxiosError,
   SubmitHandler,
   useForm,
   ILoginData,
+  useChekUser,
 } from "./index";
-import { useChekUser } from "../../../context/ChekUser";
 
 const FormControler = () => {
   const {
@@ -36,7 +35,9 @@ const FormControler = () => {
 
   const handleLoginSubmit: SubmitHandler<ILoginData> = async () => {
     try {
-      const response = await loginUserFetch(loginUser);
+      const response = (await loginUserFetch(loginUser)) as {
+        data: { accessToken: string };
+      };
       console.log(response.data.accessToken);
       console.log("Login successful2:", response);
       const token = response.data.accessToken;
@@ -61,7 +62,6 @@ const FormControler = () => {
 
   return (
     <>
-      {/* <SelectLanguage onChange={handleLanguageSwitch} text1="en" text2="ru" /> */}
       <form onSubmit={handleSubmit(handleLoginSubmit)}>
         <CostomInput
           label={t("FORM.LABELS.EMAIL")}
@@ -80,13 +80,13 @@ const FormControler = () => {
         />
         {errors?.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
         <CostomInput
-          label={t("FORM.LABELS.PASSWORD.PASSWORD")}
-          placeholder={t("FORM.LABELS.PASSWORD.PASSWORD")}
+          label={t("FORM.LABELS.PASSWORD")}
+          placeholder={t("FORM.LABELS.PASSWORD")}
           {...register("password", {
             required: t("ERROR.MESSAGE.REQUAREDMESSAGE"),
             pattern: {
               value: RegExp.PasswordRegExp,
-              message: t("ERROR.MESSGAE.PASSWORDMESSAGE"),
+              message: t("ERROR.MESSAGE.PASSWORDMESSAGE"),
             },
           })}
           style={errors.password && { borderColor: "red" }}

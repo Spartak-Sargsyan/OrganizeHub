@@ -11,7 +11,7 @@
 import { RouterProvider } from "react-router-dom";
 // import Layout from "./components/organizm/Layout/Layout";
 import { UnAuthenticatedApp } from "./routes/UnAuthenticatedApp";
-import { useChekUser } from "./context/ChekUser";
+import { useChekUser } from "./hooks/useChekUser";
 import { AuthenticatedApp } from "./routes/AuthenticatedApp";
 
 // const FileUpload = () => {
