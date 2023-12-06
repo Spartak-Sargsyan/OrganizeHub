@@ -5,13 +5,13 @@ import {
   useTranslation,
   RegExp,
   useState,
-  loginData,
-  useNavigate,
+  // loginData,
   isAxiosError,
   SubmitHandler,
   useForm,
   ILoginData,
 } from "./index";
+import { useChekUser } from "../../../context/ChekUser";
 
 const FormControler = () => {
   const {
@@ -21,6 +21,8 @@ const FormControler = () => {
   } = useForm<ILoginData>({
     mode: "all",
   });
+
+  const { loginUserFetch } = useChekUser();
 
   const [loginUser, setLoginUser] = useState<ILoginData>({
     email: "",
@@ -32,17 +34,13 @@ const FormControler = () => {
     setLoginUser({ ...loginUser, [name]: value });
   };
 
-  const navigate = useNavigate();
   const handleLoginSubmit: SubmitHandler<ILoginData> = async () => {
     try {
-      const response = await loginData(loginUser);
+      const response = await loginUserFetch(loginUser);
       console.log(response.data.accessToken);
       console.log("Login successful2:", response);
       const token = response.data.accessToken;
       localStorage.setItem("token", token);
-      if (response) {
-        navigate("/taskPage");
-      }
       return response;
     } catch (error: unknown) {
       if (isAxiosError(error)) {

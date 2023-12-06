@@ -1,12 +1,18 @@
 // import { ChangeEvent, useState } from "react";
-import { Route, Routes } from "react-router-dom";
-import Layout from "./components/organizm/Layout/Layout";
-import Login from "./components/template/Register/Login";
-import Register from "./components/template/Register/Register";
-import NotFoundPage from "./components/pages/ErrorPages/NotFoundPage";
-import PrivacyPolicy from "./components/pages/PrivacyPolicy/PrivacyPolicy";
-import WelcomePage from "./components/pages/Welcome/Welcome";
-import Task from "./components/template/Register/UserTask/Task";
+// import { Route, Routes } from "react-router-dom";
+// import Layout from "./components/organizm/Layout/Layout";
+// import Login from "./components/template/Register/Login";
+// import Register from "./components/template/Register/Register";
+// import NotFoundPage from "./components/pages/ErrorPages/NotFoundPage";
+// import PrivacyPolicy from "./components/pages/PrivacyPolicy/PrivacyPolicy";
+// import WelcomePage from "./components/pages/Welcome/Welcome";
+// import Task from "./components/template/Register/UserTask/Task";
+
+import { RouterProvider } from "react-router-dom";
+// import Layout from "./components/organizm/Layout/Layout";
+import { UnAuthenticatedApp } from "./routes/UnAuthenticatedApp";
+import { useChekUser } from "./context/ChekUser";
+import { AuthenticatedApp } from "./routes/AuthenticatedApp";
 
 // const FileUpload = () => {
 
@@ -32,10 +38,22 @@ import Task from "./components/template/Register/UserTask/Task";
 // };
 
 function App() {
+  const { isLoggedIn } = useChekUser();
+
   return (
     // <FileUpload />
     <>
-      <Routes>
+      {/* <Routes> */}
+      {/* <Route path={"/"} element={<Layout />}> */}
+      <RouterProvider
+        router={isLoggedIn ? AuthenticatedApp : UnAuthenticatedApp}
+      />
+      {/* </Route> */}
+      {/* </Routes> */}
+    </>
+  );
+  {
+    /* <Routes>
         <Route path={"/"} element={<Layout />}>
           <Route path={"/"} element={<WelcomePage />} />
           <Route path={"/login"} element={<Login siteName="OrganizeHub" />} />
@@ -44,9 +62,8 @@ function App() {
         </Route>
         <Route path={"/taskPage"} element={<Task/>} />
         <Route path={"*"} element={<NotFoundPage />} />
-      </Routes>
-    </>
-  );
+      </Routes> */
+  }
 }
 
 export default App;
