@@ -4,7 +4,6 @@ const UnauthenticatedRoutePath = {
     Home: () => '/',
     PP:() => '/privacypolicy',
     Navigate: () => '*'
-
 }
 
 const AuthenticatedRoutePath = {

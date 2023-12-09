@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, useEffect, useState } from "react";
 import { ILoginData } from "../models/interface";
 import { loginApi } from "../services/ApiRequest";
 import axios, { isAxiosError } from "axios";
@@ -20,10 +20,18 @@ export const ChekUserProvider: React.FC<IAuthProviderProps> = ({
 }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  useEffect(() => {
+    const storedLoggedIn = localStorage.getItem("isLoggedIn");
+    if (storedLoggedIn === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   const loginUser = async (loginData: ILoginData) => {
     try {
       const response = await axios.post(loginApi, loginData);
       console.log(response);
+      localStorage.setItem("isLoggedIn", "true");
       setIsLoggedIn(true);
       return response.data;
     } catch (error) {
@@ -39,6 +47,7 @@ export const ChekUserProvider: React.FC<IAuthProviderProps> = ({
 
   const userLogOut = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("isLoggedIn");
     setIsLoggedIn(false);
   };
 

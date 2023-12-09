@@ -44,10 +44,7 @@ const FormControler: React.FC = () => {
     } catch (error: unknown) {
       if (isAxiosError(error)) {
         if (error.response) {
-          console.error(
-            "Registration failed - User already exists:",
-            error.response.data
-          );
+          console.error("Registration failed - User already exists:", error);
         }
       }
     }

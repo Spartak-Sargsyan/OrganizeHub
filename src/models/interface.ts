@@ -32,5 +32,11 @@ interface IAddTasks {
     dueDate:string;
 }
 
+interface IUser {
+    id:number;
+    firstName: string;
+    lastName: string
+}
 
-export type { IErrorMessage, ILoginData, IRegiterData, IAddTasks, ITask }
+
+export type { IErrorMessage, ILoginData, IRegiterData, IAddTasks, ITask, IUser }
