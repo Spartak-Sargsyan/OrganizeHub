@@ -1,28 +1,10 @@
-import { IAddTasks, ILoginData, IRegiterData } from '../models/interface';
-import {addTasksApi, instance, loginApi,patchUserApi, taskApi, tasksDelete, userApi} from './ApiRequest';
-import axios, {AxiosError} from "axios"
-
-
-// const registerUser = async (userData: IRegiterData) => {
-//     try {
-//       const response = await axios.post(registerApi, userData);
-//       console.log('Registration successful:', response.data);
-//       return response.data;
-//     } catch (error: unknown) {
-//       if (axios.isAxiosError(error)) {
-//         console.error('Registration failed:', (error as AxiosError).response?.data);
-//         throw (error as AxiosError).response?.data;
-//       } else {
-//         console.error('Registration failed:', error);
-//         throw error;
-//       }
-//     }
-//   };
+import { IAddTasks, IRegiterData } from '../models/interface';
+import {addTasksApi, instance, patchUserApi, tasksDelete, userApi} from './ApiRequest';
+import axios from "axios"
 
 const registerUser = async (userData:IRegiterData) => {
   try{
     const response = await instance.post("/auth/register", userData);
-    console.log('Registration successful:', response.data);
     return response.data
   }
   catch(error){
@@ -30,35 +12,23 @@ const registerUser = async (userData:IRegiterData) => {
   }
 }
 
-
-const loginData = async (userLogin:ILoginData) => {
-    try {
-        const response = await axios.post(loginApi, userLogin);
-        console.log("Login successful", response.data);
-        return response.data;
+instance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token')
+    if(token){
+      config.headers.Authorization = `Bearer ${token}`;
     }
-    catch (error){
-        if(axios.isAxiosError(error)){
-          console.error("Login failed:", (error as AxiosError).response?.data);
-          throw (error as AxiosError).response?.data   
-      }
-      else{
-          console.error("Login failed ", error);
-          throw error;
-      }
-    }
-}
+    return config
+  },
+  (error)=>{
+    return Promise.reject(error);
+  }
+)
 
 const userTask = async () => {
   try{
-    const response = await axios.get(taskApi,{
-    headers:{
-      'Content-Type': 'application/json',
-      Authorization:`Bearer ${localStorage.getItem('token')}`
-    }
-  });
-  console.log(response.data);
-  return response.data;
+    const respone = await instance.get('/tasks?take=10&skip=0')
+    return respone.data
 }
   catch(error){
     console.error('Error fetching tasks:', error);
@@ -68,16 +38,8 @@ const userTask = async () => {
 
 const addTasks = async (newTasks:IAddTasks) => {
   try{
-    const response = await axios.post(addTasksApi,newTasks,
-      {
-        headers:{
-          'Content-Type': 'application/json',
-          Authorization:`Bearer ${localStorage.getItem('token')}`
-        }
-      })
-    console.log("Add tasks successful",response);
-    
-    return response
+    const response = await instance.post('/tasks',newTasks)
+    return response.data
   }
   catch(error){
     console.error("Add tasks fail:", error);
@@ -87,16 +49,12 @@ const addTasks = async (newTasks:IAddTasks) => {
 
 const deleteTask = async (tasksId: number) => {
   try{
-    const respone = await axios.delete(`${tasksDelete}/${tasksId}`, {
-      headers:{
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    }
-    )
+    const respone = await instance.delete(`$tasks/${tasksId}` )
     return respone
-  }catch(error){
+  }
+  catch(error){
     console.error("Fail delete: ", error);
+    throw error
   }
 }
 
@@ -133,4 +91,4 @@ const patchUser = async (userData:{firstName:string, lastName:string}) => {
 }
 
 
-export {registerUser, loginData, userTask, addTasks, deleteTask,fetchUser, patchUser}
+export {registerUser, userTask, addTasks, deleteTask,fetchUser, patchUser}

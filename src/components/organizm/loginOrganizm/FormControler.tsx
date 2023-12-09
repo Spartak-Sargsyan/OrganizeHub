@@ -5,11 +5,10 @@ import {
   useTranslation,
   RegExp,
   useState,
-  isAxiosError,
   SubmitHandler,
   useForm,
   ILoginData,
-  useChekUser,
+  useChekUser
 } from "./index";
 
 const FormControler = () => {
@@ -33,29 +32,23 @@ const FormControler = () => {
     setLoginUser({ ...loginUser, [name]: value });
   };
 
-  const handleLoginSubmit: SubmitHandler<ILoginData> = async () => {
-    try {
-      const response = (await loginUserFetch(loginUser)) as {
-        data: { accessToken: string };
-      };
-      console.log(response.data.accessToken);
-      console.log("Login successful2:", response);
-      const token = response.data.accessToken;
-      localStorage.setItem("token", token);
-      return response;
-    } catch (error: unknown) {
-      if (isAxiosError(error)) {
-        if (error.response) {
-          console.error(
-            "Registration failed - User already exists:",
-            error.response.data
-          );
-        } else {
-          console.error("Registration failed:", error);
-        }
+  const handleLoginSubmit:SubmitHandler<ILoginData> = async () => {
+    try{
+      const response =( await loginUserFetch(loginUser)) as {
+        data:{accessToken: string}
       }
+      console.log("0fsd", response.data.accessToken);
+      localStorage.setItem('token', response.data.accessToken);
+      console.log(response);
+      return response 
     }
-  };
+    catch(error){
+      console.error("Log failed", error);
+      
+    }
+  }
+
+
   const isButtonDisable = !isDirty || isValid;
 
   const { t } = useTranslation();

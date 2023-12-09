@@ -17,7 +17,7 @@ const UnAuthenticatedApp = createBrowserRouter([
         loader: () => <div>Loading</div>,
       },
       {
-        element: <Login siteName="sdfnsdfkljdfn" />,
+        element: <Login siteName="OrginizeHub" />,
         path: UnauthenticatedRoutePath.Login(),
         errorElement: <div>Error happend</div>,
         loader: () => <div>Loading</div>,
