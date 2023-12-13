@@ -1,4 +1,4 @@
-import { IErrorMessage } from "../models/interface"
+import { IErrorMessage, IRegiterData } from "../models/interface"
 
 type ErrorMessage = Partial<IErrorMessage>
 
@@ -6,4 +6,13 @@ type RegEx = {
     [key:string]:RegExp;
 }
 
-export type { ErrorMessage, RegEx }
+type RegisterState = {
+    auth:{
+        user:IRegiterData[],
+        isLoading:boolean,
+        error:string | null
+    }
+}
+
+
+export type { ErrorMessage, RegEx, RegisterState }

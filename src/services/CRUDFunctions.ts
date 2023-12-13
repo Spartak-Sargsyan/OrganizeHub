@@ -1,29 +1,8 @@
-import { IAddTasks, IRegiterData } from '../models/interface';
-import {addTasksApi, instance, patchUserApi, tasksDelete, userApi} from './ApiRequest';
+import { IAddTasks } from '../models/interface';
+import { instance, patchUserApi} from './ApiRequest';
 import axios from "axios"
 
-const registerUser = async (userData:IRegiterData) => {
-  try{
-    const response = await instance.post("/auth/register", userData);
-    return response.data
-  }
-  catch(error){
-    console.error('Registration failed:', error);
-  }
-}
 
-instance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('token')
-    if(token){
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config
-  },
-  (error)=>{
-    return Promise.reject(error);
-  }
-)
 
 const userTask = async () => {
   try{
@@ -49,7 +28,7 @@ const addTasks = async (newTasks:IAddTasks) => {
 
 const deleteTask = async (tasksId: number) => {
   try{
-    const respone = await instance.delete(`$tasks/${tasksId}` )
+    const respone = await instance.delete(`tasks/${tasksId}` )
     return respone
   }
   catch(error){
@@ -60,12 +39,7 @@ const deleteTask = async (tasksId: number) => {
 
 const fetchUser = async () => {
   try{
-    const response = await axios.get(userApi, {
-      headers:{
-        "Content-Type":"application/json",
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    })
+    const response = await instance.get('/users/profile')
     console.log(response.data);
     
     return response.data
@@ -91,4 +65,4 @@ const patchUser = async (userData:{firstName:string, lastName:string}) => {
 }
 
 
-export {registerUser, userTask, addTasks, deleteTask,fetchUser, patchUser}
+export {  addTasks, deleteTask,fetchUser, userTask, patchUser }

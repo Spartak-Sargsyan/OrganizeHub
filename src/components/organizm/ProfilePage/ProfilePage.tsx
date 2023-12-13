@@ -11,49 +11,38 @@ import {
   Flex,
   Box,
   Image,
-  Icon,
+  // Icon,
 } from "@chakra-ui/react";
-import { ChangeEvent, useEffect, useState } from "react";
-import { deleteTask, userTask } from "../../../services/CRUDFunctions";
-import { ITask } from "../../../models/interface";
+import { useEffect } from "react";
+// import { deleteTask } from "../../../services/CRUDFunctions";
+// import { ITask } from "../../../models/interface";
 import logo from "../../../assets/images/logo.png";
-import Menu from "../../moleculs/Menu/Menu";
-import { CostomInput } from "../regisrerOrganizm";
-import { SearchIcon } from "@chakra-ui/icons";
+// import Menu from "../../moleculs/Menu/Menu";
+// import { CostomInput } from "../regisrerOrganizm";
+// import { SearchIcon } from "@chakra-ui/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchingTasks as fetchingTasksAction } from "../../../store/service";
 
 const ProfilePage = () => {
-  const [tasks, setTasks] = useState<ITask[]>([]);
-  const [filterTasks, setFilterTasks] = useState("");
+  // const handleDeleteTasks = async (idTasks: number) => {
+  //   try {
+  //     await deleteTask(idTasks);
+  //     fetchTasks();
+  //   } catch (error) {
+  //     console.error("Feiled delete: ", error);
+  //   }
+  // };
 
-  const handleSearchTasks = (e: ChangeEvent<HTMLInputElement>) =>
-    setFilterTasks(e.target.value);
+  const dispatch = useDispatch();
+  const tasks = useSelector((state) => state.tasks.tasks);
+  const isLoading = useSelector((state) => state.tasks.isLoading);
+  const error = useSelector((state) => state.tasks.error);
 
-  const handleSearchClick = () => {
-    setTasks(tasks.filter((item) => item.dueDate.startsWith(filterTasks)));
-  };
-
-  const fetchTasks = async () => {
-    try {
-      const { data } = await userTask();
-      setTasks(data);
-      console.log(data);
-    } catch (error) {
-      console.error("Tasks error:", error);
-    }
-  };
-
-  const handleDeleteTasks = async (idTasks: number) => {
-    try {
-      await deleteTask(idTasks);
-      fetchTasks();
-    } catch (error) {
-      console.error("Feiled delete: ", error);
-    }
-  };
+  console.log(tasks);
 
   useEffect(() => {
-    fetchTasks();
-  }, []);
+    dispatch(fetchingTasksAction());
+  }, [dispatch]);
 
   return (
     <>
@@ -63,7 +52,7 @@ const ProfilePage = () => {
         </Box>
         <Box>
           <Flex align={"center"}>
-            <CostomInput
+            {/* <CostomInput
               value={filterTasks}
               handleChange={handleSearchTasks}
               width={"500px"}
@@ -71,10 +60,8 @@ const ProfilePage = () => {
             />
             <Button mt={2} onClick={handleSearchClick}>
               <Icon as={SearchIcon} />
-            </Button>
-            <Box mt={1}>
-              <Menu getTask={fetchTasks} />
-            </Box>
+            </Button> */}
+            <Box mt={1}>{/* <Menu getTask={fetchTasks} /> */}</Box>
           </Flex>
         </Box>
       </Flex>
@@ -107,7 +94,7 @@ const ProfilePage = () => {
                   <ButtonGroup spacing={3}>
                     <Button colorScheme="blue">Edit</Button>
                     <Button
-                      onClick={() => handleDeleteTasks(item.id)}
+                      // onClick={() => handleDeleteTasks(item.id)}
                       colorScheme="blue"
                     >
                       Delete
@@ -118,8 +105,10 @@ const ProfilePage = () => {
             );
           })
         ) : (
-          <Heading>You don't have To Do</Heading>
+          <p>Dont have taks</p>
         )}
+        {isLoading ? <Heading>Lodr</Heading> : null}
+        {error ? <Text>eror</Text> : null}
       </Flex>
     </>
   );

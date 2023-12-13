@@ -7,7 +7,6 @@ const patchUserApi:string = `${import.meta.env.VITE_APP_BASE_URL}/users/profile`
 
 export { loginApi, taskApi, addTasksApi, tasksDelete, userApi, patchUserApi }
 
-
 import axios from "axios"
 
 const instance = axios.create({
@@ -18,10 +17,18 @@ const instance = axios.create({
     }
 })
 
-const configWithAuthorization = {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem("token" || "refreshToken")}`,
-      },
-}
 
-export { instance, configWithAuthorization }
+instance.interceptors.request.use(
+    (config) => {
+      const token = localStorage.getItem('token')
+      const refreshToken  = localStorage.getItem('refreshToken')
+      if(token) config.headers.Authorization = `Bearer ${token }`;
+      else if (refreshToken) config.headers.Authorization = `Bearer ${refreshToken}`
+      return config
+    },
+    (error)=>{
+      return Promise.reject(error);
+    }
+  )
+
+export { instance }

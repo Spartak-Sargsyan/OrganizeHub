@@ -8,9 +8,11 @@ import {
   RegExp,
   IRegiterData,
 } from "./index";
-import { registerUser } from "../../../services/CRUDFunctions";
 import { useState } from "react";
-import { isAxiosError } from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchingRegister } from "../../../store/service";
+import { RegisterState } from "../../../models/type";
+import { Heading } from "@chakra-ui/react";
 
 const FormControler: React.FC = () => {
   const {
@@ -20,6 +22,10 @@ const FormControler: React.FC = () => {
   } = useForm<IRegiterData>({
     mode: "all",
   });
+
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state: RegisterState) => state.auth.isLoading);
+  const error = useSelector((state: RegisterState) => state.auth.error);
 
   const [registerForm, setRegisterForm] = useState<IRegiterData>({
     firstName: "",
@@ -37,17 +43,8 @@ const FormControler: React.FC = () => {
   const { t } = useTranslation();
 
   const handleRegisterSubmit: SubmitHandler<IRegiterData> = async () => {
-    try {
-      const response = await registerUser(registerForm);
-      console.log("Registration successful:", response);
-      return response;
-    } catch (error: unknown) {
-      if (isAxiosError(error)) {
-        if (error.response) {
-          console.error("Registration failed - User already exists:", error);
-        }
-      }
-    }
+    const response = dispatch(fetchingRegister(registerForm));
+    return response;
   };
 
   return (
@@ -149,6 +146,8 @@ const FormControler: React.FC = () => {
           {t("FORM.LABELS.BUTTON.SIGNUP")}
         </Button>
       </form>
+      {isLoading ? <Heading>Loading...</Heading> : null}
+      {error ? <Heading>error...</Heading> : null}
     </>
   );
 };

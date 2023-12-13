@@ -1,6 +1,9 @@
 import style from "./register.module.css";
 import FormContoler from "../../organizm/regisrerOrganizm/FormControler";
-// import img from "../../assets/images/register.jpg";
+import { useSelector } from "react-redux";
+import { Heading } from "@chakra-ui/react";
+import { RegisterState } from "../../../models/type";
+
 interface IRegisterProps {
   siteName?: string;
   description?: string;
@@ -8,12 +11,16 @@ interface IRegisterProps {
 }
 
 const Register = ({ logoName, siteName, description }: IRegisterProps) => {
+  const isLoading = useSelector((state: RegisterState) => state.auth.isLoading);
+  const error = useSelector((state: RegisterState) => state.auth.error);
+
   return (
     <div className={style.wrapper}>
       <div className={style.wrapperRigster}>
         <div className={style.wrapperForm}>
           <div className={style.formContainer}>
             <FormContoler />
+
           </div>
         </div>
         <div className={style.imageContainer}>
