@@ -1,13 +1,27 @@
-import { IAddTasks } from '../models/interface';
+import { IAddTasks, ILoginData } from '../models/interface';
 import { instance, patchUserApi} from './ApiRequest';
 import axios from "axios"
+
+export const loginUser = async (userData:ILoginData) => {
+  try{
+    const response = await instance.post('/auth/login', userData)
+    const data = await response.data
+    return data
+  }
+  catch(error){
+    console.error("Log err", error);
+    throw error
+  }
+}
+
 
 
 
 const userTask = async () => {
   try{
-    const respone = await instance.get('/tasks?take=10&skip=0')
-    return respone.data
+    const response = await instance.get('/tasks?take=10&skip=0')
+    // const data = response.data;
+    return response.data
 }
   catch(error){
     console.error('Error fetching tasks:', error);
@@ -26,10 +40,21 @@ const addTasks = async (newTasks:IAddTasks) => {
   }
 }
 
+export const fetchingOneTask = async (taskId: number) =>{
+  try{
+    const response = await instance.get(`/tasks/${taskId}`)
+    return response.data
+  }
+  catch(error){
+    console.error("One error", error);
+  }
+}
+
+
 const deleteTask = async (tasksId: number) => {
   try{
-    const respone = await instance.delete(`tasks/${tasksId}` )
-    return respone
+    const response = await instance.delete(`tasks/${tasksId}` )
+    return response
   }
   catch(error){
     console.error("Fail delete: ", error);

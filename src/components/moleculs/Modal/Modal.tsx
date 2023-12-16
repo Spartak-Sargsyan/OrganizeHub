@@ -16,11 +16,11 @@ import { IAddTasks } from "../../../models/interface";
 import { useForm } from "react-hook-form";
 import { addTasks } from "../../../services/CRUDFunctions";
 
-interface IModalTasksProps {
-  getTasks: () => void;
-}
+// interface IModalTasksProps {
+//   getTasks: () => void;
+// }
 
-const ModalTasks = ({ getTasks }: IModalTasksProps) => {
+const ModalTasks = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [createTasks, setCreateTasks] = useState<IAddTasks>({
     title: "",
@@ -39,7 +39,7 @@ const ModalTasks = ({ getTasks }: IModalTasksProps) => {
     try {
       const response = await addTasks(createTasks);
       console.log(response);
-      getTasks();
+      // getTasks();
       return response;
     } catch (error) {
       console.error("Fail create: ", error);

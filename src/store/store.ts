@@ -5,7 +5,8 @@ import tasksSlice from './tasksSlice'
 
 export const store = configureStore({
     reducer: {
-    auth:registerSlice,
+      auth:registerSlice,
       tasks: tasksSlice,
     },
 });
+  

@@ -1,18 +1,13 @@
 import { createSlice} from "@reduxjs/toolkit"
-import { fetchingTasks as fetchingTasksAction } from "./service";
-import { ITask } from "../models/interface";
-
-interface ITaskState  {
-    tasks:ITask[],
-    isLoading:boolean;
-    error:string|null;
-}
+import { deleteTasks, fetchOneTask, fetchingTasks as fetchingTasksAction } from "./service";
+import { ITaskState } from "../models/interface";
 
 
 const initialState: ITaskState = {
     tasks:[],
     isLoading:false,
-    error: null 
+    error: undefined,
+    selectedTask:null
 };
 
 const tasksSlice = createSlice({
@@ -31,6 +26,28 @@ const tasksSlice = createSlice({
             state.isLoading = false;
             state.error = action.error.message
         })
+        builder.addCase(deleteTasks.pending, (state) => {
+            state.isLoading = true
+        })
+        builder.addCase(deleteTasks.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.tasks = state.tasks.filter((task) => task.id !== action.payload);
+        })
+        builder.addCase(deleteTasks.rejected, (state,action) => {
+            state.isLoading = false;
+            state.error = action.error.message
+        }),
+        builder.addCase(fetchOneTask.pending, (state) => {
+            state.isLoading = true;
+          });
+          builder.addCase(fetchOneTask.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.selectedTask = action.payload;
+          });
+          builder.addCase(fetchOneTask.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.error.message;
+          });
     }
 })
 

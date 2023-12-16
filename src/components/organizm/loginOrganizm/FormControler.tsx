@@ -8,7 +8,7 @@ import {
   SubmitHandler,
   useForm,
   ILoginData,
-  useChekUser
+  useChekUser,
 } from "./index";
 
 const FormControler = () => {
@@ -32,22 +32,19 @@ const FormControler = () => {
     setLoginUser({ ...loginUser, [name]: value });
   };
 
-  const handleLoginSubmit:SubmitHandler<ILoginData> = async () => {
-    try{
-      const response =( await loginUserFetch(loginUser)) as {
-        data:{accessToken: string}
-      }
+  const handleLoginSubmit: SubmitHandler<ILoginData> = async () => {
+    try {
+      const response = (await loginUserFetch(loginUser)) as {
+        data: { accessToken: string };
+      };
       console.log("0fsd", response.data.accessToken);
-      localStorage.setItem('token', response.data.accessToken);
+      localStorage.setItem("token", response.data.accessToken);
       console.log(response);
-      return response 
-    }
-    catch(error){
+      return response;
+    } catch (error) {
       console.error("Log failed", error);
-      
     }
-  }
-
+  };
 
   const isButtonDisable = !isDirty || isValid;
 

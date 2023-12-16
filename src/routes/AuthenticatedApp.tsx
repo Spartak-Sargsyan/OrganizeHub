@@ -1,7 +1,9 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import ProfilePage from "../components/organizm/ProfilePage/ProfilePage";
 import { AuthenticatedRoutePath } from "../constant/routes";
-import Task from "../components/template/Register/UserTask/Task";
+// import Task from "../components/template/UserTask/Task";
+import TaskPage from "../components/pages/TaskPage/TaskPage";
+
 
 const AuthenticatedApp = createBrowserRouter([
   {
@@ -11,8 +13,8 @@ const AuthenticatedApp = createBrowserRouter([
     loader: () => <div>Loading</div>,
   },
   {
-    element: <Task />,
-    path: AuthenticatedRoutePath.Tasks(),
+    element: <TaskPage />,
+    path: `${AuthenticatedRoutePath.Task()}/:id`,
     errorElement: <div>Error happend</div>,
     loader: () => <div>Loading</div>,
   },

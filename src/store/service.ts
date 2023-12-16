@@ -1,7 +1,7 @@
-import { IRegiterData } from "../models/interface";
+import { ILoginData, IRegiterData } from "../models/interface";
 import { instance } from "../services/ApiRequest";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { userTask } from "../services/CRUDFunctions";
+import { fetchingOneTask, loginUser, userTask, deleteTask as deleteTaskService } from "../services/CRUDFunctions";
 
 
 export const fetchingRegister = createAsyncThunk(
@@ -10,7 +10,7 @@ export const fetchingRegister = createAsyncThunk(
         try{
             const response = await instance.post('/auth/register', userData);
             const data = response.data;
-            console.log(data);  
+            console.log(data); 
             return data
         } catch(error){
             console.error("Register fetch fail: ", error);
@@ -19,15 +19,46 @@ export const fetchingRegister = createAsyncThunk(
     } 
 );
 
+export const  fetchingLogin = createAsyncThunk(
+    'auth/login',
+    async (userData:ILoginData)=>{
+        try{
+            const response = await loginUser(userData)
+            return response
+        }
+        catch(error){
+            console.error("Login ", error);
+            
+        }
+    }
+) 
+
+
 export const fetchingTasks = createAsyncThunk(
     'user/tasks',
     async (_, {rejectWithValue}) => {
         try{
-            const response = await userTask();
-            return response
+            const { data } = await userTask();
+            return data
         }
         catch(error){
             return rejectWithValue(error)    
         }
+    }
+)
+
+export const deleteTasks = createAsyncThunk(
+    'tasks/delete',
+    async (tasksId:number) => {
+        await deleteTaskService(tasksId);
+        return tasksId
+    }
+)
+
+export const fetchOneTask = createAsyncThunk(
+    'tasks/oneTask',
+    async (taskId:number) => {
+        const {data} = await fetchingOneTask(taskId)
+        return data;
     }
 )

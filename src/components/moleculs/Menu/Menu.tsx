@@ -21,11 +21,11 @@ import { IUser } from "../../../models/interface";
 import { fetchUser } from "../../../services/CRUDFunctions";
 import EditProfileModal from "../EditProfile/EditProfileModal";
 
-interface IGetTask {
-  getTask: () => void;
-}
+// interface IGetTask {
+//   getTask?: () => void;
+// }
 
-const Menu = ({ getTask }: IGetTask) => {
+const Menu = () => {
   const { onClose, isOpen, onOpen } = useDisclosure();
   const { userLogOut } = useChekUser();
 
@@ -71,7 +71,7 @@ const Menu = ({ getTask }: IGetTask) => {
             </Flex>
             <Divider mt={15} mb={15} />
             <Box mt={5}>
-              <ModalTasks getTasks={getTask} />
+              <ModalTasks />
               <br />
               <br />
               <EditProfileModal />

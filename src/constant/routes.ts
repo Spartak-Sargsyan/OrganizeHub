@@ -8,8 +8,7 @@ const UnauthenticatedRoutePath = {
 
 const AuthenticatedRoutePath = {
     Profile: () => '/profile',
-    Tasks: () => '/tasks',
-    AddTasks: () => "/createtasks",
+    Task: () => "/tasks",
     Navigate: () => '*'
 }
 

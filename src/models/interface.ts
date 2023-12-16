@@ -26,6 +26,13 @@ interface ITask {
     dueDate:string;
 }
 
+interface ITaskState  {
+    tasks:ITask[],
+    isLoading:boolean;
+    error:string|undefined;
+    selectedTask:null;
+}
+
 interface IAddTasks {
     title:string;
     description: string;
@@ -39,4 +46,4 @@ interface IUser {
 }
 
 
-export type { IErrorMessage, ILoginData, IRegiterData, IAddTasks, ITask, IUser }
+export type { ITaskState, IErrorMessage, ILoginData, IRegiterData, IAddTasks, ITask, IUser }

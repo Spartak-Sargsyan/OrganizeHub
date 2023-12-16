@@ -28,18 +28,16 @@ export const ChekUserProvider: React.FC<IAuthProviderProps> = ({
 
   const loginUser = async (userData: ILoginData) => {
     try {
-      const response = await instance.post('/auth/login', userData)
+      const response = await instance.post("/auth/login", userData);
       localStorage.setItem("isLoggedIn", "true");
 
       setIsLoggedIn(true);
-      
-      return response.data;
-    }
-    catch (error) {
-     console.error(error);
-    };
-  }
 
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const userLogOut = () => {
     localStorage.removeItem("token");
