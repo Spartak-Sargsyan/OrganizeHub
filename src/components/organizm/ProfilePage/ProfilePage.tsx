@@ -7,9 +7,11 @@ import { fetchingTasks as fetchingTasksAction } from "../../../store/service";
 import Tasks from "../../pages/Tasks/Tasks";
 
 const ProfilePage = () => {
+
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.isLoading);
   const error = useSelector((state) => state.error);
+
 
   useEffect(() => {
     dispatch(fetchingTasksAction());
@@ -35,7 +37,6 @@ const ProfilePage = () => {
         flexWrap={"wrap"}
         justifyContent={"space-beetwen"}
       >
-        
         <Tasks />
         {isLoading ? (
           <Spinner
@@ -48,6 +49,7 @@ const ProfilePage = () => {
         ) : null}
 
         {error ? <Text>error</Text> : null}
+      
       </Flex>
     </>
   );

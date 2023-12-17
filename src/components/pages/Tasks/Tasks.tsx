@@ -16,14 +16,15 @@ import {
   deleteTasks,
   fetchingTasks as fetchingTasksAction,
 } from "../../../store/service";
+import EditTask from "../../moleculs/EditModal/EditTask";
 
 const Tasks = () => {
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.tasks.tasks);
 
-  const handleDeleteTasks = async (idTasks: number) => {
+  const handleDeleteTasks = (idTasks: number) => {
     try {
-      await dispatch(deleteTasks(idTasks));
+      dispatch(deleteTasks(idTasks));
       dispatch(fetchingTasksAction());
     } catch (error) {
       console.error("Failed delete: ", error);
@@ -46,7 +47,6 @@ const Tasks = () => {
           <Link to={`${AuthenticatedRoutePath.Task()}/${item.id}`}>
             <Button colorScheme="blue">View</Button>
           </Link>
-          <Button colorScheme="blue">Edit</Button>
           <Button onClick={() => handleDeleteTasks(item.id)} colorScheme="blue">
             Delete
           </Button>

@@ -1,5 +1,4 @@
 import {
-  //   Box,
   Button,
   Modal,
   ModalBody,
@@ -14,13 +13,16 @@ import { CostomInput } from "../../organizm/regisrerOrganizm";
 import { useState } from "react";
 import { IAddTasks } from "../../../models/interface";
 import { useForm } from "react-hook-form";
-import { addTasks } from "../../../services/CRUDFunctions";
+import { useDispatch } from "react-redux";
+import {
+  createTask,
+  fetchingTasks as fetchingTasksAction,
+} from "../../../store/service";
 
-// interface IModalTasksProps {
-//   getTasks: () => void;
-// }
 
 const ModalTasks = () => {
+  const dispatch = useDispatch();
+
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [createTasks, setCreateTasks] = useState<IAddTasks>({
     title: "",
@@ -37,10 +39,8 @@ const ModalTasks = () => {
 
   const handleCreateTask = async () => {
     try {
-      const response = await addTasks(createTasks);
-      console.log(response);
-      // getTasks();
-      return response;
+      dispatch(createTask(createTasks));
+      dispatch(fetchingTasksAction());
     } catch (error) {
       console.error("Fail create: ", error);
     }

@@ -1,7 +1,7 @@
-import { ILoginData, IRegiterData } from "../models/interface";
+import { IAddTasks, ILoginData, IRegiterData } from "../models/interface";
 import { instance } from "../services/ApiRequest";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchingOneTask, loginUser, userTask, deleteTask as deleteTaskService } from "../services/CRUDFunctions";
+import { fetchingOneTask, loginUser, userTask, deleteTask as deleteTaskService, addTasks, editTask } from "../services/CRUDFunctions";
 
 
 export const fetchingRegister = createAsyncThunk(
@@ -36,13 +36,14 @@ export const  fetchingLogin = createAsyncThunk(
 
 export const fetchingTasks = createAsyncThunk(
     'user/tasks',
-    async (_, {rejectWithValue}) => {
+    async () => {
         try{
             const { data } = await userTask();
             return data
         }
         catch(error){
-            return rejectWithValue(error)    
+            console.error('Failed to fetch tasks:', error);
+            throw error
         }
     }
 )
@@ -50,15 +51,57 @@ export const fetchingTasks = createAsyncThunk(
 export const deleteTasks = createAsyncThunk(
     'tasks/delete',
     async (tasksId:number) => {
-        await deleteTaskService(tasksId);
-        return tasksId
+        try{
+            await deleteTaskService(tasksId);
+            return tasksId
+        }
+        catch(error){
+            console.error(error);
+            throw error
+        }
     }
 )
 
 export const fetchOneTask = createAsyncThunk(
     'tasks/oneTask',
     async (taskId:number) => {
-        const {data} = await fetchingOneTask(taskId)
-        return data;
+        try{
+            const {data} = await fetchingOneTask(taskId)
+            return data;
+        }
+        catch(error){
+            console.error(error);
+            throw error
+        }
+    }
+)
+
+export const createTask = createAsyncThunk(
+    "tasks/newTask",
+    async (newTasks:IAddTasks)=>{
+        try{
+            const response = await addTasks(newTasks);
+            return response
+        }
+        catch(error){
+            console.error(error);
+            throw error
+        }
+    }
+)
+
+
+
+export const patchingTask = createAsyncThunk(
+    'tasks/editTask',
+    async ({taskId, updateTask}:{number, ITaksEdit}) => {
+        try{
+            const response = await editTask(taskId, updateTask)
+            return response
+        }
+        catch(error){
+            console.error(error);
+            throw error
+        }
     }
 )

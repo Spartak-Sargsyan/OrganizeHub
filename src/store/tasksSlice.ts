@@ -1,5 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit"
-import { deleteTasks, fetchOneTask, fetchingTasks as fetchingTasksAction } from "./service";
+import { createTask, deleteTasks, fetchOneTask, fetchingTasks as fetchingTasksAction, patchingTask } from "./service";
 import { ITaskState } from "../models/interface";
 
 
@@ -7,7 +7,8 @@ const initialState: ITaskState = {
     tasks:[],
     isLoading:false,
     error: undefined,
-    selectedTask:null
+    selectedTask:null,
+    // isEditing: false,
 };
 
 const tasksSlice = createSlice({
@@ -39,15 +40,40 @@ const tasksSlice = createSlice({
         }),
         builder.addCase(fetchOneTask.pending, (state) => {
             state.isLoading = true;
+            // state.isEditing = true;
           });
           builder.addCase(fetchOneTask.fulfilled, (state, action) => {
             state.isLoading = false;
+            console.log(action.payload);
             state.selectedTask = action.payload;
           });
           builder.addCase(fetchOneTask.rejected, (state, action) => {
             state.isLoading = false;
+            // state.isEditing = false;
             state.error = action.error.message;
           });
+          builder.addCase(createTask.pending, (state) => {
+            state.isLoading = true;
+          });
+          builder.addCase(createTask.fulfilled, (state) => {
+            state.isLoading = false
+          });
+          builder.addCase(createTask.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.error.message;
+          });
+          builder.addCase(patchingTask.pending, (state)=> {
+            state.isLoading = true
+          })
+          builder.addCase(patchingTask.fulfilled, (state)=> {
+            state.isLoading = false
+            // state.isEditing = false
+          })
+          builder.addCase(patchingTask.rejected, (state,action)=> {
+            state.isLoading = false
+            state.error = action.error.message
+            // state.isEditing = false
+          })
     }
 })
 

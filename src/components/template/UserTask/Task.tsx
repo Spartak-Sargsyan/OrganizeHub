@@ -1,9 +1,17 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOneTask } from "../../../store/service";
-import { Box, Button, Container, Heading, Spinner, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Heading,
+  Spinner,
+  Text,
+} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { AuthenticatedRoutePath } from "../../../constant/routes";
+import EditTask from "../../moleculs/EditModal/EditTask";
 
 const Task = ({ taskId }) => {
   const dispatch = useDispatch();
@@ -11,7 +19,7 @@ const Task = ({ taskId }) => {
   const isLoading = useSelector((state) => state.tasks.isLoading);
   const error = useSelector((state) => state.tasks.error);
   console.log(selectedTask);
-  
+
   useEffect(() => {
     dispatch(fetchOneTask(taskId));
   }, [dispatch, taskId]);
@@ -23,7 +31,6 @@ const Task = ({ taskId }) => {
   if (error) {
     return <Text>Error: {error}</Text>;
   }
-  
 
   return (
     <Container mt={10}>
@@ -33,14 +40,20 @@ const Task = ({ taskId }) => {
           <Box mb={4}>
             <Text>{selectedTask.description}</Text>
           </Box>
-          <Box>
-            <Text>Due Date: {selectedTask.dueDate.slice(0,10)}</Text>
+          <Box mb={4}>
+            <Text>{selectedTask.id}</Text>
           </Box>
-          <Link to={AuthenticatedRoutePath.Profile()}><Button>Back</Button></Link>
+          <Box>
+            <Text>Due Date: {selectedTask.dueDate.slice(0, 10)}</Text>
+          </Box>
+          <Link to={AuthenticatedRoutePath.Profile()}>
+            <Button>Back</Button>
+          </Link>
         </>
       ) : (
         <Text>No task found</Text>
       )}
+      <EditTask />
     </Container>
   );
 };

@@ -31,6 +31,7 @@ interface ITaskState  {
     isLoading:boolean;
     error:string|undefined;
     selectedTask:null;
+    isEditing?:boolean;
 }
 
 interface IAddTasks {

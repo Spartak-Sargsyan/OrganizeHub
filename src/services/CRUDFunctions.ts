@@ -2,6 +2,8 @@ import { IAddTasks, ILoginData } from '../models/interface';
 import { instance, patchUserApi} from './ApiRequest';
 import axios from "axios"
 
+
+
 export const loginUser = async (userData:ILoginData) => {
   try{
     const response = await instance.post('/auth/login', userData)
@@ -15,11 +17,9 @@ export const loginUser = async (userData:ILoginData) => {
 }
 
 
-
-
-const userTask = async () => {
+export const userTask = async () => {
   try{
-    const response = await instance.get('/tasks?take=10&skip=0')
+    const response = await instance.get(`/tasks?take=10&skip=0`)
     // const data = response.data;
     return response.data
 }
@@ -29,9 +29,9 @@ const userTask = async () => {
   }
 }
 
-const addTasks = async (newTasks:IAddTasks) => {
+export const addTasks = async (newTasks:IAddTasks) => {
   try{
-    const response = await instance.post('/tasks',newTasks)
+    const response = await instance.post('/tasks', newTasks)
     return response.data
   }
   catch(error){
@@ -51,7 +51,7 @@ export const fetchingOneTask = async (taskId: number) =>{
 }
 
 
-const deleteTask = async (tasksId: number) => {
+export const deleteTask = async (tasksId: number) => {
   try{
     const response = await instance.delete(`tasks/${tasksId}` )
     return response
@@ -62,7 +62,18 @@ const deleteTask = async (tasksId: number) => {
   }
 }
 
-const fetchUser = async () => {
+export const editTask = async (taskId: number, updateTask) => {
+  try{
+    const response = await instance.patch(`/tasks/${taskId}`, updateTask)
+    return response.data
+  }
+  catch(error){
+    console.error(error);
+    throw error
+  }
+}
+
+export const fetchUser = async () => {
   try{
     const response = await instance.get('/users/profile')
     console.log(response.data);
@@ -74,7 +85,7 @@ const fetchUser = async () => {
   } 
 }
 
-const patchUser = async (userData:{firstName:string, lastName:string}) => {
+export const patchUser = async (userData:{firstName:string, lastName:string}) => {
   try{
     const response = await axios.patch(patchUserApi, userData,{
       headers:{
@@ -89,5 +100,3 @@ const patchUser = async (userData:{firstName:string, lastName:string}) => {
   }
 }
 
-
-export {  addTasks, deleteTask,fetchUser, userTask, patchUser }

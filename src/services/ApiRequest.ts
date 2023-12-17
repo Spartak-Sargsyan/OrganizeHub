@@ -1,11 +1,4 @@
-const loginApi: string = `${import.meta.env.VITE_APP_BASE_URL}/auth/login`;
-const taskApi: string = `${import.meta.env.VITE_APP_BASE_URL}/tasks?take=10&skip=0`
-const addTasksApi: string = `${import.meta.env.VITE_APP_BASE_URL}/tasks`
-const tasksDelete:string = `${import.meta.env.VITE_APP_BASE_URL}/tasks`
-const userApi:string = `${import.meta.env.VITE_APP_BASE_URL}/users/profile`
-const patchUserApi:string = `${import.meta.env.VITE_APP_BASE_URL}/users/profile`
-
-export { loginApi, taskApi, addTasksApi, tasksDelete, userApi, patchUserApi }
+export const patchUserApi:string = `${import.meta.env.VITE_APP_BASE_URL}/users/profile`
 
 import axios from "axios"
 
