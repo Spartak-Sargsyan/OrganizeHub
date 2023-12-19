@@ -19,7 +19,6 @@ import {
   fetchingTasks as fetchingTasksAction,
 } from "../../../store/service";
 
-
 const ModalTasks = () => {
   const dispatch = useDispatch();
 

@@ -16,34 +16,32 @@ import { SwitchColor } from "../SwitchColor/SwitchColor";
 import ModalTasks from "../Modal/Modal";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { useChekUser } from "../../../hooks/useChekUser";
-import { useEffect, useState } from "react";
-import { IUser } from "../../../models/interface";
-import { fetchUser } from "../../../services/CRUDFunctions";
+import { useEffect } from "react";
+import { fetchingUser } from "../../../store/service";
 import EditProfileModal from "../EditProfile/EditProfileModal";
-
-// interface IGetTask {
-//   getTask?: () => void;
-// }
+import { useDispatch, useSelector } from "react-redux";
 
 const Menu = () => {
   const { onClose, isOpen, onOpen } = useDisclosure();
   const { userLogOut } = useChekUser();
 
-  const [user, setUser] = useState<IUser[]>([]);
-
-  const getUser = async () => {
-    try {
-      const { data } = await fetchUser();
-      setUser([...user, data]);
-      console.log(data);
-    } catch (error) {
-      console.error("Failed user ", error);
-    }
-  };
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.users);
+  const isLoading = useSelector((state) => state.user.isLoading);
+  const error = useSelector((state) => state.user.error);
+  console.log(user);
 
   useEffect(() => {
-    getUser();
-  }, []);
+    const fetchData = async () => {
+      try {
+        await dispatch(fetchingUser());
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    };
+    fetchData();
+  }, [dispatch]);
 
   return (
     <>
@@ -67,6 +65,8 @@ const Menu = () => {
                   </Box>
                 );
               })}
+              {isLoading ? <Text>Loading...</Text> : null}
+              {error ? <Text>error...</Text> : null}
               <ModalCloseButton />
             </Flex>
             <Divider mt={15} mb={15} />

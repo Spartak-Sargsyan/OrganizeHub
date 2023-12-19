@@ -19,6 +19,8 @@ interface IRegiterData{
     password: string;
 }
 
+
+
 interface ITask {
     id:number;
     title:string;
@@ -31,7 +33,12 @@ interface ITaskState  {
     isLoading:boolean;
     error:string|undefined;
     selectedTask:null;
-    isEditing?:boolean;
+}
+
+interface IUserState {
+    users:IUser[];
+    isLoading:boolean;
+    error:undefined | string
 }
 
 interface IAddTasks {
@@ -40,11 +47,26 @@ interface IAddTasks {
     dueDate:string;
 }
 
+interface ITaksEdit {
+    title:string;
+    description:string; 
+}
+
 interface IUser {
     id:number;
     firstName: string;
     lastName: string
 }
 
+interface IEditUser{
+    firstName:string;
+    lastName:string
+}
 
-export type { ITaskState, IErrorMessage, ILoginData, IRegiterData, IAddTasks, ITask, IUser }
+interface ILoginState {
+    isLoggedIn: boolean,
+    isLoading: boolean,
+    error: string | undefined 
+}
+
+export type { ILoginState, IEditUser, IUserState, ITaksEdit, ITaskState, IErrorMessage, ILoginData, IRegiterData, IAddTasks, ITask, IUser }

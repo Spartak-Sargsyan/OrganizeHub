@@ -8,7 +8,6 @@ import {
   RegExp,
   IRegiterData,
 } from "./index";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchingRegister } from "../../../store/service";
 import { RegisterState } from "../../../models/type";
@@ -27,24 +26,11 @@ const FormControler: React.FC = () => {
   const isLoading = useSelector((state: RegisterState) => state.auth.isLoading);
   const error = useSelector((state: RegisterState) => state.auth.error);
 
-  const [registerForm, setRegisterForm] = useState<IRegiterData>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setRegisterForm({ ...registerForm, [name]: value });
-  };
-
   const isButtonDisable = isDirty || isValid;
   const { t } = useTranslation();
 
-  const handleRegisterSubmit: SubmitHandler<IRegiterData> = async () => {
-    const response = dispatch(fetchingRegister(registerForm));
-    return response;
+  const handleRegisterSubmit: SubmitHandler<IRegiterData> =  (data) => {
+     dispatch(fetchingRegister(data));
   };
 
   return (
@@ -69,8 +55,6 @@ const FormControler: React.FC = () => {
               message: t("ERROR.MESSAGE.MAXLENGTHMESSAGE"),
             },
           })}
-          value={registerForm.firstName}
-          handleChange={handleInputChange}
         />
 
         {errors?.firstName && (
@@ -93,8 +77,6 @@ const FormControler: React.FC = () => {
           })}
           style={errors.lastName && { borderColor: "red" }}
           type="text"
-          value={registerForm.lastName}
-          handleChange={handleInputChange}
         />
         {errors?.lastName && (
           <ErrorMessage>{errors.lastName.message}</ErrorMessage>
@@ -112,8 +94,6 @@ const FormControler: React.FC = () => {
           })}
           style={errors.email && { borderColor: "red" }}
           type="email"
-          value={registerForm.email}
-          handleChange={handleInputChange}
         />
 
         {errors?.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
@@ -134,8 +114,6 @@ const FormControler: React.FC = () => {
           })}
           style={errors.password && { borderColor: "red" }}
           type="password"
-          value={registerForm.password}
-          handleChange={handleInputChange}
         />
 
         {errors?.password && (

@@ -1,5 +1,3 @@
-export const patchUserApi:string = `${import.meta.env.VITE_APP_BASE_URL}/users/profile`
-
 import axios from "axios"
 
 const instance = axios.create({

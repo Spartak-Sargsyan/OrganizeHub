@@ -1,8 +1,5 @@
-import { IAddTasks, ILoginData } from '../models/interface';
-import { instance, patchUserApi} from './ApiRequest';
-import axios from "axios"
-
-
+import { IAddTasks, IEditUser, ILoginData, IRegiterData, ITaksEdit } from '../models/interface';
+import { instance } from './ApiRequest';
 
 export const loginUser = async (userData:ILoginData) => {
   try{
@@ -16,11 +13,22 @@ export const loginUser = async (userData:ILoginData) => {
   }
 }
 
+export const regUser = async (userData:IRegiterData) => {
+  try{
+      const response = await instance.post('/auth/register', userData);
+      const data = response.data;
+      return data
+  } catch(error){
+      console.error("Register fetch fail: ", error);
+      throw error
+  }
+}
+
+
 
 export const userTask = async () => {
   try{
-    const response = await instance.get(`/tasks?take=10&skip=0`)
-    // const data = response.data;
+    const response = await instance.get(`/tasks?take=100&skip=0`)
     return response.data
 }
   catch(error){
@@ -62,7 +70,7 @@ export const deleteTask = async (tasksId: number) => {
   }
 }
 
-export const editTask = async (taskId: number, updateTask) => {
+export const editTask = async (taskId: number, updateTask:ITaksEdit) => {
   try{
     const response = await instance.patch(`/tasks/${taskId}`, updateTask)
     return response.data
@@ -76,8 +84,6 @@ export const editTask = async (taskId: number, updateTask) => {
 export const fetchUser = async () => {
   try{
     const response = await instance.get('/users/profile')
-    console.log(response.data);
-    
     return response.data
   }
   catch(error){
@@ -85,18 +91,14 @@ export const fetchUser = async () => {
   } 
 }
 
-export const patchUser = async (userData:{firstName:string, lastName:string}) => {
+export const patchUser = async (userData:IEditUser) => {
   try{
-    const response = await axios.patch(patchUserApi, userData,{
-      headers:{
-        "Content-Type":"application/json",
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    })
+    const response = await instance.patch("/users/profile", userData)
     return response.data
   }
   catch(error){
     console.error("Patch failed ", error);
+    throw error
   }
 }
 

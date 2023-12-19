@@ -11,60 +11,34 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { CostomInput } from "../CostomInput/CostomInput";
-import { ChangeEvent, useEffect, useState } from "react";
-import { fetchUser, patchUser } from "../../../services/CRUDFunctions";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchingUser, patchingUser } from "../../../store/service";
 
 const EditProfileModal = () => {
   const { onClose, isOpen, onOpen } = useDisclosure();
+  const { register, handleSubmit, setValue } = useForm();
 
-  const [editMode, setEditMode] = useState(false);
-  const [editedData, setEditedData] = useState<{
-    firstName: string;
-    lastName: string;
-  }>({
-    firstName: "",
-    lastName: "",
-  });
-  const [userData, setUserData] = useState({});
-
-  const { register, handleSubmit } = useForm();
-
-  const fetchUserData = async () => {
-    try {
-      const { data } = await fetchUser();
-      setUserData(data);
-    } catch (error) {
-      console.error("Failed to fetch user data", error);
-    }
-  };
-  const handleEditClick = () => {
-    setEditMode(true);
-    setEditedData({ ...userData });
-  };
-
-  const handleSaveClick = async () => {
-    try {
-      const { data } = await patchUser(editedData);
-      setUserData({
-        ...userData,
-        firstName: data.firstName,
-        lastName: data.lastName,
-      });
-      await fetchUserData();
-    } catch (error) {
-      console.error("Patch Failed", error);
-    }
-  };
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setEditedData((prev) => ({ ...prev, [name]: value }));
-  };
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.users[0]);
 
   useEffect(() => {
-    fetchUserData();
-  }, []);
+    if (user) {
+      setValue("firstName", user.firstName || "");
+      setValue("lastName", user.lastName || "");
+    }
+  }, [user, setValue]);
+
+  const handleChangeSave = async (data) => {
+    try {
+      await dispatch(patchingUser(data));
+      dispatch(fetchingUser());
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
 
   return (
     <>
@@ -72,7 +46,6 @@ const EditProfileModal = () => {
         <Button
           onClick={() => {
             onOpen();
-            handleEditClick();
           }}
         >
           Settings
@@ -84,26 +57,20 @@ const EditProfileModal = () => {
         <ModalContent>
           <ModalHeader>Create Task</ModalHeader>
           <ModalCloseButton />
-          <form onSubmit={handleSubmit(handleSaveClick)}>
-            {editMode ? (
-              <ModalBody>
-                <CostomInput
-                  label={"First Name"}
-                  value={editedData.firstName}
-                  handleChange={handleInputChange}
-                  type={"text"}
-                  {...register("firstName")}
-                />
-                <br />
-                <CostomInput
-                  label={"Last Name"}
-                  value={editedData.lastName}
-                  handleChange={handleInputChange}
-                  type={"text"}
-                  {...register("lastName")}
-                />
-              </ModalBody>
-            ) : null}
+          <form onSubmit={handleSubmit(handleChangeSave)}>
+            <ModalBody>
+              <CostomInput
+                label={"First Name"}
+                type={"text"}
+                {...register("firstName")}
+              />
+              <br />
+              <CostomInput
+                label={"Last Name"}
+                type={"text"}
+                {...register("lastName")}
+              />
+            </ModalBody>
 
             <ModalFooter>
               <Button colorScheme="blue" type={"submit"}>

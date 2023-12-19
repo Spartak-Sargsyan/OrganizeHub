@@ -8,7 +8,6 @@ const initialState: ITaskState = {
     isLoading:false,
     error: undefined,
     selectedTask:null,
-    // isEditing: false,
 };
 
 const tasksSlice = createSlice({
@@ -40,7 +39,6 @@ const tasksSlice = createSlice({
         }),
         builder.addCase(fetchOneTask.pending, (state) => {
             state.isLoading = true;
-            // state.isEditing = true;
           });
           builder.addCase(fetchOneTask.fulfilled, (state, action) => {
             state.isLoading = false;
@@ -49,7 +47,6 @@ const tasksSlice = createSlice({
           });
           builder.addCase(fetchOneTask.rejected, (state, action) => {
             state.isLoading = false;
-            // state.isEditing = false;
             state.error = action.error.message;
           });
           builder.addCase(createTask.pending, (state) => {
@@ -67,12 +64,10 @@ const tasksSlice = createSlice({
           })
           builder.addCase(patchingTask.fulfilled, (state)=> {
             state.isLoading = false
-            // state.isEditing = false
           })
           builder.addCase(patchingTask.rejected, (state,action)=> {
             state.isLoading = false
             state.error = action.error.message
-            // state.isEditing = false
           })
     }
 })

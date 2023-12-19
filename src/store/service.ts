@@ -1,17 +1,14 @@
-import { IAddTasks, ILoginData, IRegiterData } from "../models/interface";
-import { instance } from "../services/ApiRequest";
+import { IAddTasks, IEditUser, ILoginData, IRegiterData, ITaksEdit } from "../models/interface";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchingOneTask, loginUser, userTask, deleteTask as deleteTaskService, addTasks, editTask } from "../services/CRUDFunctions";
+import { fetchingOneTask, loginUser, userTask, deleteTask as deleteTaskService, addTasks, editTask, fetchUser, patchUser, regUser } from "../services/CRUDFunctions";
 
 
 export const fetchingRegister = createAsyncThunk(
     'auth/regsiter',
     async (userData:IRegiterData) => {
         try{
-            const response = await instance.post('/auth/register', userData);
-            const data = response.data;
-            console.log(data); 
-            return data
+            const response = await regUser(userData);
+            return response
         } catch(error){
             console.error("Register fetch fail: ", error);
             throw error
@@ -91,10 +88,14 @@ export const createTask = createAsyncThunk(
 )
 
 
+interface IEditTask {
+    taskId: number;
+    updateTask:ITaksEdit
+}
 
 export const patchingTask = createAsyncThunk(
     'tasks/editTask',
-    async ({taskId, updateTask}:{number, ITaksEdit}) => {
+    async ({taskId, updateTask}: IEditTask) => {
         try{
             const response = await editTask(taskId, updateTask)
             return response
@@ -102,6 +103,34 @@ export const patchingTask = createAsyncThunk(
         catch(error){
             console.error(error);
             throw error
+        }
+    }
+)
+
+export const fetchingUser = createAsyncThunk(
+    "user/fetchUser",
+    async () => {
+        try{
+           const response = await fetchUser()
+           return response
+        }
+        catch(error){
+            console.error(error);
+            throw error          
+        }
+    }
+)
+
+export const patchingUser = createAsyncThunk(
+    "user/patchingUser",
+    async (userData:IEditUser) => {
+        try{
+            const { data } = await patchUser(userData);
+            return data 
+        }
+        catch (error){
+            console.error(error);
+            throw error    
         }
     }
 )

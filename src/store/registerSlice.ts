@@ -3,9 +3,8 @@ import { fetchingRegister } from "./service";
 
 
 const initialState = {
-    user:null,
     isLoading:false,
-    error: null as string | null | undefined
+    error: undefined
 };
 
 const registerSlice = createSlice({
@@ -16,16 +15,17 @@ const registerSlice = createSlice({
         builder
             .addCase(fetchingRegister.pending, (state)=>{
                 state.isLoading = true
+                state.error = undefined
             })
         builder
-            .addCase(fetchingRegister.fulfilled, (state,action) => {
+            .addCase(fetchingRegister.fulfilled, (state) => {
                 state.isLoading = false;
-                state.user = action.payload
+                state.error = undefined
             })
         builder
             .addCase(fetchingRegister.rejected, (state,action) => {
                 state.isLoading = false;
-                state.error = action.error.message 
+                state.error = state.error && action.error.message
             })
     }
 })
