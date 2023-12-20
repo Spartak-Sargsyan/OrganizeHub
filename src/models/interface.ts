@@ -64,9 +64,9 @@ interface IEditUser{
 }
 
 interface ILoginState {
-    isLoggedIn: boolean,
-    isLoading: boolean,
-    error: string | undefined 
+    isLoggedIn: boolean;
+    isLoading: boolean;
+    error: string | undefined; 
 }
 
 export type { ILoginState, IEditUser, IUserState, ITaksEdit, ITaskState, IErrorMessage, ILoginData, IRegiterData, IAddTasks, ITask, IUser }

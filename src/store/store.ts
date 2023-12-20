@@ -10,7 +10,7 @@ export const store = configureStore({
       auth:registerSlice,
       tasks: tasksSlice,
       user: userSlice,
-      auth2: loginSlice
+      login: loginSlice
     },
 });
   

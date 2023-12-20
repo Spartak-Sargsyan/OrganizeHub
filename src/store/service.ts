@@ -1,6 +1,6 @@
 import { IAddTasks, IEditUser, ILoginData, IRegiterData, ITaksEdit } from "../models/interface";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchingOneTask, loginUser, userTask, deleteTask as deleteTaskService, addTasks, editTask, fetchUser, patchUser, regUser } from "../services/CRUDFunctions";
+import { fetchingOneTask, loginUser, userTask, deleteTask as deleteTaskService, addTasks, editTask, fetchUser, patchUser, regUser, patchingPassword } from "../services/CRUDFunctions";
 
 
 export const fetchingRegister = createAsyncThunk(
@@ -8,6 +8,8 @@ export const fetchingRegister = createAsyncThunk(
     async (userData:IRegiterData) => {
         try{
             const response = await regUser(userData);
+            const token = response.acceaccessToken
+            localStorage.setItem("token", token)
             return response
         } catch(error){
             console.error("Register fetch fail: ", error);
@@ -16,7 +18,7 @@ export const fetchingRegister = createAsyncThunk(
     } 
 );
 
-export const  fetchingLogin = createAsyncThunk(
+export const fetchingLogin = createAsyncThunk(
     'auth/login',
     async (userData:ILoginData)=>{
         try{
@@ -29,7 +31,6 @@ export const  fetchingLogin = createAsyncThunk(
         }
     }
 ) 
-
 
 export const fetchingTasks = createAsyncThunk(
     'user/tasks',
@@ -134,3 +135,18 @@ export const patchingUser = createAsyncThunk(
         }
     }
 )
+
+export const changePassword = createAsyncThunk( 
+    "user/changePass",
+    async (newData:string) => {
+        try{
+            const response = await patchingPassword(newData)
+            console.log(response.data);
+            return response.data
+        }
+        catch(error){
+            console.error(error);
+            throw error
+            
+        }
+})

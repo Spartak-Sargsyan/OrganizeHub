@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { fetchingUser, patchingUser } from "./service"
+import { changePassword, fetchingUser, patchingUser } from "./service"
 import { IUserState } from "../models/interface"
 
 const initialState:IUserState = { 
@@ -32,6 +32,16 @@ const userSlice = createSlice({
         })
         builder.addCase(patchingUser.rejected, (state) => {
             state.isLoading = false;
+        })
+        builder.addCase(changePassword.pending, (state) => {
+            state.isLoading = true;
+        })
+        builder.addCase(changePassword.fulfilled, (state) => {
+            state.isLoading = false;
+        })
+        builder.addCase(changePassword.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.error.message || undefined 
         })
     }
 })

@@ -24,11 +24,9 @@ export const regUser = async (userData:IRegiterData) => {
   }
 }
 
-
-
 export const userTask = async () => {
   try{
-    const response = await instance.get(`/tasks?take=100&skip=0`)
+    const response = await instance.get(`/tasks?take=10&skip=0`)
     return response.data
 }
   catch(error){
@@ -102,3 +100,13 @@ export const patchUser = async (userData:IEditUser) => {
   }
 }
 
+export const patchingPassword = async (data: string) => {
+  try{
+    const response = await instance.patch('auth/password', data)
+    return response.data
+  }
+  catch(error){
+    console.error(error);
+    throw error
+  }
+}

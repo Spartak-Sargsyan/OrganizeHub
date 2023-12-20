@@ -1,6 +1,6 @@
 import { RouterProvider } from "react-router-dom";
 import { UnAuthenticatedApp } from "./routes/UnAuthenticatedApp";
-import { useChekUser } from "./hooks/useChekUser";
+import { useCheckUser } from "./components/organizm/loginOrganizm/ChekUser";
 import { AuthenticatedApp } from "./routes/AuthenticatedApp";
 
 // const FileUpload = () => {
@@ -24,8 +24,11 @@ import { AuthenticatedApp } from "./routes/AuthenticatedApp";
 // };
 
 function App() {
-  const { isLoggedIn } = useChekUser();
+  const { isLoggedIn } = useCheckUser();
+
   const isLogin = localStorage.getItem("isLoggedIn") === "true";
+  console.log(isLogin);
+
   return (
     <>
       <RouterProvider

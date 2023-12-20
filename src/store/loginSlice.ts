@@ -3,7 +3,6 @@ import { fetchingLogin } from './service'
 import { ILoginState } from '../models/interface';
 
 
-
 const initialState:ILoginState = {
     isLoggedIn:false,
     isLoading:false,
@@ -15,16 +14,19 @@ const loginSlice = createSlice({
     initialState,
     reducers:{
         userIsLoggedIn: (state)=>{
-            state.isLoggedIn = true;
+            state.isLoggedIn = true;  
         },
         userIsLoggedOut: (state)=>{
             state.isLoggedIn = false;
-        }
+            console.log(userIsLoggedIn);
+            localStorage.removeItem("isLoggedIn");
+            localStorage.removeItem("token" || "refreshToken");
+        },
     },
     extraReducers:(builder) =>{
         builder.addCase(fetchingLogin.pending, (state)=>{
-            state.isLoading = false;
-            state.error = undefined
+            state.isLoading = true;
+            state.error = undefined;
         })
         builder.addCase(fetchingLogin.fulfilled, (state) => {
             state.isLoading = false;
@@ -33,10 +35,12 @@ const loginSlice = createSlice({
         })
         builder.addCase(fetchingLogin.rejected, (state,action)=>{
             state.isLoading = false;
-            state.error = action.error.message
+            state.error = action.error.message;
+            state.isLoading = false;
         })
     }
 })
 
-export const { userIsLoggedIn, userIsLoggedOut} = loginSlice.actions
+export const {  userIsLoggedIn, userIsLoggedOut } = loginSlice.actions
+                
 export default loginSlice.reducer

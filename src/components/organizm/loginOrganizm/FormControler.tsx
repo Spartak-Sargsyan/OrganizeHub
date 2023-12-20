@@ -4,51 +4,48 @@ import {
   ErrorMessage,
   useTranslation,
   RegExp,
-  useState,
-  SubmitHandler,
   useForm,
   ILoginData,
-  useChekUser,
 } from "./index";
+import { Spinner } from "@chakra-ui/react";
+import { useCheckUser } from "./ChekUser";
+import { ChangeEvent, useState } from "react";
 
 const FormControler = () => {
+  const { isLoading, error, loginUserFetch } = useCheckUser();
   const {
     register,
     formState: { errors, isDirty, isValid },
     handleSubmit,
   } = useForm<ILoginData>({
     mode: "all",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
+  const isButtonDisable = !isDirty || isValid;
+  const { t } = useTranslation();
 
-  const { loginUserFetch } = useChekUser();
-
-  const [loginUser, setLoginUser] = useState<ILoginData>({
+  const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setLoginUser({ ...loginUser, [name]: value });
+    setCredentials({ ...credentials, [name]: value });
   };
 
-  const handleLoginSubmit: SubmitHandler<ILoginData> = async () => {
+  const handleLoginSubmit = async () => {
     try {
-      const response = (await loginUserFetch(loginUser)) as {
-        data: { accessToken: string };
-      };
-      console.log("0fsd", response.data.accessToken);
-      localStorage.setItem("token", response.data.accessToken);
-      console.log(response);
+      const response = await loginUserFetch(credentials);
+      localStorage.setItem("isLoggedIn", "true");
       return response;
     } catch (error) {
-      console.error("Log failed", error);
+      console.error(error);
+      throw error;
     }
   };
-
-  const isButtonDisable = !isDirty || isValid;
-
-  const { t } = useTranslation();
 
   return (
     <>
@@ -65,8 +62,8 @@ const FormControler = () => {
               message: t("ERROR.MESSAGE.EMAILMESSAGE"),
             },
           })}
-          value={loginUser.email}
-          handleChange={handleInputChange}
+          value={credentials.email}
+          handleChange={handleChangeInput}
         />
         {errors?.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
         <CostomInput
@@ -81,8 +78,8 @@ const FormControler = () => {
           })}
           style={errors.password && { borderColor: "red" }}
           type="password"
-          value={loginUser.password}
-          handleChange={handleInputChange}
+          value={credentials.password}
+          handleChange={handleChangeInput}
         />
         {errors?.password && (
           <ErrorMessage>{errors.password.message}</ErrorMessage>
@@ -96,6 +93,8 @@ const FormControler = () => {
           {t("FORM.LABELS.BUTTON.SIGNIN")}
         </Button>
       </form>
+      {isLoading && <Spinner />}
+      {error && <p>Error</p>}
     </>
   );
 };
