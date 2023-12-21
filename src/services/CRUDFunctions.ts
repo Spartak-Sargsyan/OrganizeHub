@@ -102,11 +102,14 @@ export const patchUser = async (userData:IEditUser) => {
 
 export const patchingPassword = async (data: string) => {
   try{
-    const response = await instance.patch('auth/password', data)
+    const response = await instance.patch('/auth/password', { data } )
     return response.data
   }
   catch(error){
     console.error(error);
+    if (error.response && error.response.status === 400) {
+      console.error(error.response.data);
+    }
     throw error
   }
 }

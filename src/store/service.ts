@@ -130,6 +130,7 @@ export const patchingUser = createAsyncThunk(
             return data 
         }
         catch (error){
+            
             console.error(error);
             throw error    
         }
@@ -138,15 +139,17 @@ export const patchingUser = createAsyncThunk(
 
 export const changePassword = createAsyncThunk( 
     "user/changePass",
-    async (newData:string) => {
+    async (newData: string, {rejectWithValue}) => {
         try{
             const response = await patchingPassword(newData)
-            console.log(response.data);
-            return response.data
+            console.log(response);
+            return response
         }
         catch(error){
+            if (error.response && error.response.status === 400 || error.response.status === 422) {
+                return rejectWithValue(error.response.data);
+              }
             console.error(error);
             throw error
-            
         }
 })

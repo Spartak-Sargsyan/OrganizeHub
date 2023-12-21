@@ -14,6 +14,8 @@ import { CostomInput } from "../CostomInput/CostomInput";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { changePassword } from "../../../store/service";
+import { useTranslation } from "react-i18next";
+import { RegExp } from "../../organizm/regisrerOrganizm";
 
 const EditPassword = () => {
   const { onClose, isOpen, onOpen } = useDisclosure();
@@ -21,15 +23,18 @@ const EditPassword = () => {
 
   const dispatch = useDispatch();
 
-  const handeleChangePassword = async (data:string) => {
+  const { t } = useTranslation();
+
+  const handeleSubmtiPassword = (data: string) => {
     try {
-      await dispatch(changePassword(data.newPassword));
+      dispatch(changePassword(data.newPassword));
       onClose();
     } catch (error) {
       console.error(error);
       throw error;
     }
   };
+  // const hand
 
   return (
     <>
@@ -48,12 +53,18 @@ const EditPassword = () => {
         <ModalContent>
           <ModalHeader>Create Task</ModalHeader>
           <ModalCloseButton />
-          <form onSubmit={handleSubmit(handeleChangePassword)}>
+          <form onSubmit={handleSubmit(handeleSubmtiPassword)}>
             <ModalBody>
               <CostomInput
                 label={"New password"}
                 type={"password"}
-                {...register("newPassword")}
+                {...register("newPassword", {
+                  required: t("ERROR.MESSAGE.REQUAREDMESSAGE"),
+                  pattern: {
+                    value: RegExp.EmailRegExp,
+                    message: t("EROROR.MESSAGE.EMAILMESSAGE"),
+                  },
+                })}
               />
             </ModalBody>
 

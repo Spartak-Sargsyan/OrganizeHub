@@ -29,8 +29,8 @@ const FormControler: React.FC = () => {
   const isButtonDisable = isDirty || isValid;
   const { t } = useTranslation();
 
-  const handleRegisterSubmit: SubmitHandler<IRegiterData> =  (data) => {
-     dispatch(fetchingRegister(data));
+  const handleRegisterSubmit: SubmitHandler<IRegiterData> = (data) => {
+    dispatch(fetchingRegister(data));
   };
 
   return (
